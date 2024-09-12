@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+@layer utilities {
+  .bg-custom-gradient {
+    background: linear-gradient(90deg, #000b02 6.34%, #2f2e36 37.81%);
+  }
+  .bg-custom-url {
+    background-image: url("/assests/hero.png");
+    background-size: cover;
+    background-position: center;
+  }
+}
