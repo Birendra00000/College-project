@@ -2,6 +2,9 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar"; // Make sure Navbar component is correctly imported
 import Home from "./pages/home/Home";
+import Footer from "./components/Footer";
+import Login from "./pages/login/Login";
+import Register from "./pages/Register/Register";
 
 function App() {
   const LayOut = () => {
@@ -9,6 +12,7 @@ function App() {
       <>
         <Navbar />
         <Outlet />
+        <Footer />
       </>
     );
   };
@@ -21,6 +25,14 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },
