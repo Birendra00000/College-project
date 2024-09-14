@@ -4,7 +4,7 @@ import { FaCircleUser } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 const Navbar = () => {
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full shadow-lg">
       <div className="flex w-[80%] items-center justify-between p-5">
         <span className="font-black text text-2xl">
           YAT<span className="text-[#F5B963]">RA</span>

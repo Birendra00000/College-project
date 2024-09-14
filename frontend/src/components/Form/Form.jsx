@@ -1,9 +1,11 @@
 import React from "react";
 import Button from "../resuable/Button";
 const From = ({ titletype }) => {
+  const formheight = titletype === "login" ? "90vh" : "100vh";
+
   return (
-    <div className="w-full flex justify-center h-[90vh] items-center">
-      <div className={`w-[40%] bg-black text-white  p-14 rounded-md       }`}>
+    <div className={`w-full flex justify-center ${formheight} items-center`}>
+      <div className={`w-[40%] bg-black text-white  p-14 rounded-md m-6`}>
         <span className="flex justify-center flex-col items-center ">
           <p className="mb-4">
             {titletype === "login" ? (
@@ -67,7 +69,7 @@ const From = ({ titletype }) => {
                   className="input-boxpassword relative p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-10/12"
                   required
                 />
-                <span className="placeholderpassword absolute text-white w-[140px] left-4 top-[158px] transition-all duration-300">
+                <span className="placeholderpassword absolute text-white w-[165px] left-4 top-[256px] transition-all duration-300">
                   Enter your password
                 </span>
               </>
@@ -87,7 +89,14 @@ const From = ({ titletype }) => {
             </p>
           </span>
         ) : (
-          <span></span>
+          <span>
+            <span className="w-full flex justify-center mt-2">
+              <p>
+                Already have an accout?
+                <span className="text-red-600 underline"> Login</span>
+              </p>
+            </span>
+          </span>
         )}
       </div>
     </div>
