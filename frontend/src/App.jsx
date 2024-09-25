@@ -5,6 +5,7 @@ import Home from "./pages/home/Home";
 import Footer from "./components/Footer";
 import Login from "./pages/login/Login";
 import Register from "./pages/Register/Register";
+import Contact from "./pages/contact/Contact";
 
 function App() {
   const LayOut = () => {
@@ -25,6 +26,10 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/contactus",
+          element: <Contact />,
         },
         {
           path: "/login",

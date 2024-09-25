@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../resuable/Button";
+import { Link } from "react-router-dom";
 const From = ({ titletype }) => {
   const formheight = titletype === "login" ? "90vh" : "100vh";
 
@@ -40,7 +41,7 @@ const From = ({ titletype }) => {
                 className="input-box1 relative p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-10/12"
                 required
               />
-              <span className="placeholder1 absolute text-white w-[140px] left-4 top-[60px] transition-all duration-300">
+              <span className="placeholder1 absolute text-white w-[140px] left-4 top-[60px] transition-all duration-300 text-sm">
                 Enter your name
               </span>
             </>
@@ -53,7 +54,7 @@ const From = ({ titletype }) => {
                 className="input-box2 relative p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-10/12"
                 required
               />
-              <span className="placeholder2 absolute text-white w-[140px] left-4 top-[158px] transition-all duration-300">
+              <span className="placeholder2 absolute text-white w-[140px] left-4 top-[158px] transition-all duration-300 text-sm">
                 Enter your email
               </span>
             </>
@@ -69,7 +70,7 @@ const From = ({ titletype }) => {
                   className="input-boxpassword relative p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-10/12"
                   required
                 />
-                <span className="placeholderpassword absolute text-white w-[165px] left-4 top-[256px] transition-all duration-300">
+                <span className="placeholderpassword absolute text-white w-[165px] left-4 top-[256px] transition-all duration-300 text-sm">
                   Enter your password
                 </span>
               </>
@@ -85,7 +86,10 @@ const From = ({ titletype }) => {
           <span className="w-full flex justify-center mt-2">
             <p>
               Don't have an accout?
-              <span className="text-red-600 underline"> Register</span>
+              <Link to="/register" className="text-red-600 underline">
+                {" "}
+                Register
+              </Link>
             </p>
           </span>
         ) : (
@@ -93,7 +97,10 @@ const From = ({ titletype }) => {
             <span className="w-full flex justify-center mt-2">
               <p>
                 Already have an accout?
-                <span className="text-red-600 underline"> Login</span>
+                <Link to="/login" className="text-red-600 underline">
+                  {" "}
+                  Login
+                </Link>
               </p>
             </span>
           </span>

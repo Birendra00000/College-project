@@ -50,7 +50,7 @@ const FAQ = () => {
             </div>
           ))}
         </div>
-        <span className="flex flex-col">
+        <span className="flex flex-col p-10">
           <p className="font-bold mb-2">Still have a question?</p>
           <p>
             If you still have questions contact a member of our team on{" "}
