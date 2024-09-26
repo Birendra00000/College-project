@@ -77,6 +77,67 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <div className="w-full flex justify-center">
+        {" "}
+        <div className="w-[60%] flex justify-center flex-col ">
+          <span className="flex text-center flex-col w-full gap-[10%]">
+            <p className="text-black text-4xl font-bold mb-[2%]">
+              Our leadership team
+            </p>
+            <p className="text-gray-600">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Aspernatur, recusandae!
+            </p>
+            <p className="text-gray-600">
+              Lorem ipsum dolor, sit amet consectetur adipisicing.
+            </p>
+          </span>
+          <div className="grid grid-cols-3 gap-[10%] my-[8%]">
+            <div>
+              <span className="bg-gray-100 w-[250px] h-[200px] flex justify-center items-end">
+                <img
+                  src="/assests/demo5.jpg"
+                  alt=""
+                  className="w-10/12 h-[95%] "
+                />
+              </span>
+              <p>Harry Dc</p>
+              <p className="flex items-center text-gray-500 text-sm gap-1">
+                <MdOutlineEmail />
+                harry345@gmail.com
+              </p>
+            </div>{" "}
+            <div>
+              <span className="bg-gray-100 w-[250px] h-[200px] flex justify-center items-end">
+                <img
+                  src="/assests/demo5.jpg"
+                  alt=""
+                  className="w-10/12 h-[95%] "
+                />
+              </span>
+              <p>Harry Dc</p>
+              <p className="flex items-center text-gray-500 text-sm gap-1">
+                <MdOutlineEmail />
+                harry345@gmail.com
+              </p>
+            </div>{" "}
+            <div>
+              <span className="bg-gray-100 w-[250px] h-[200px] flex justify-center items-end">
+                <img
+                  src="/assests/demo5.jpg"
+                  alt=""
+                  className="w-10/12 h-[95%] "
+                />
+              </span>
+              <p>Harry Dc</p>
+              <p className="flex items-center text-gray-500 text-sm gap-1">
+                <MdOutlineEmail />
+                harry345@gmail.com
+              </p>
+            </div>{" "}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

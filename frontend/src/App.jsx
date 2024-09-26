@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/login/Login";
 import Register from "./pages/Register/Register";
 import Contact from "./pages/contact/Contact";
+import Packages from "./pages/packages/Packages";
 
 function App() {
   const LayOut = () => {
@@ -31,6 +32,11 @@ function App() {
           path: "/contactus",
           element: <Contact />,
         },
+        {
+          path: "/packages",
+          element: <Packages />,
+        },
+
         {
           path: "/login",
           element: <Login />,
