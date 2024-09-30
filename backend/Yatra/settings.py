@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drfapigenerator',
     'django_filters',
+    'login',
 ]
 
 MIDDLEWARE = [
