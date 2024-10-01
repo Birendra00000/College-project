@@ -2,7 +2,6 @@ import React from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { IoCallOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
-import Button from "../../components/resuable/Button";
 
 const Contact = () => {
   return (
