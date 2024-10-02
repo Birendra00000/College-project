@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaCircleUser } from "react-icons/fa6";
+import { RxCross1 } from "react-icons/rx";
 import { RxHamburgerMenu } from "react-icons/rx";
 const Navbar = () => {
   const [hoverSearch, setHoverSearch] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const refCurrent = useRef(null);
+  // console.log(refCurrent.current);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (refCurrent.current && !refCurrent.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
+
   return (
     <div className="flex justify-center w-full shadow-lg">
       <div
@@ -49,12 +70,22 @@ const Navbar = () => {
       </div>
       {menuOpen && (
         <div className=" absolute top-0 left-0 z-10 bg-[#00000044] h-full w-full">
-          <div className="md:hidden bg-black text-white shadow-md w-[70%] h-full">
+          <div
+            className="md:hidden bg-black text-white shadow-md w-[70%] h-full"
+            ref={refCurrent}
+          >
+            <span
+              className="p-2 flex justify-end"
+              onClick={() => setMenuOpen(false)}
+            >
+              {" "}
+              <RxCross1 size={25} />
+            </span>
             <div className="flex flex-col items-center py-4 space-y-4 ">
-              <p onClick={() => setMenuOpen(false)}>HOME</p>
-              <p onClick={() => setMenuOpen(false)}>PACKAGES</p>
-              <p onClick={() => setMenuOpen(false)}>ABOUT US</p>
-              <p onClick={() => setMenuOpen(false)}>CONTACT</p>
+              <p>HOME</p>
+              <p>PACKAGES</p>
+              <p>ABOUT US</p>
+              <p>CONTACT</p>
             </div>
           </div>
         </div>
