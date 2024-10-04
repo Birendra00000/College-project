@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'packages',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'drfapigenerator',
     'django_filters',
     'login',
@@ -74,6 +76,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Yatra.wsgi.application'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
 
 
 # Database
@@ -85,7 +93,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -127,3 +139,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
