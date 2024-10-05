@@ -22,11 +22,10 @@ class bookmarkViewsets(viewsets.ModelViewSet):
     ordering_fields = ['id']
 
     def get_queryset(self):
-        """
-        Override get_queryset to filter bookmarks by the logged-in user.
-        """
+        user = self.request.user
+        print(f"Authenticated user: {user}")
         queryset = super().get_queryset()
-        return queryset.filter(user=self.request.user)
+        return queryset.filter(user=user)
 
     def get_serializer_class(self):
         """

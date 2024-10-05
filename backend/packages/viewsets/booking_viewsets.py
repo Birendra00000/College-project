@@ -1,17 +1,16 @@
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from ..models import Login
-from rest_framework.permissions import IsAuthenticated
-from ..serializers.login_serializers import LoginListSerializers, LoginRetrieveSerializers, LoginWriteSerializers
+from ..models import Booking
+from ..serializers.booking_serializers import BookingListSerializers, BookingRetrieveSerializers, BookingWriteSerializers
 from ..utilities.importbase import *
 
-class loginViewsets(viewsets.ModelViewSet):
-    serializer_class = LoginListSerializers
-    permission_classes = [packagesPermission]
-    #authentication_classes = [JWTAuthentication]
+class bookingViewsets(viewsets.ModelViewSet):
+    serializer_class = BookingListSerializers
+    # permission_classes = [packagesPermission]
+    # authentication_classes = [JWTAuthentication]
     #pagination_class = MyPageNumberPagination
-    queryset = Login.objects.all()
+    queryset = Booking.objects.all()
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
@@ -28,9 +27,9 @@ class loginViewsets(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
-            return LoginWriteSerializers
+            return BookingWriteSerializers
         elif self.action == 'retrieve':
-            return LoginRetrieveSerializers
+            return BookingRetrieveSerializers
         return super().get_serializer_class()
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")

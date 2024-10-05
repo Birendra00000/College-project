@@ -1,17 +1,16 @@
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from ..models import Login
-from rest_framework.permissions import IsAuthenticated
-from ..serializers.login_serializers import LoginListSerializers, LoginRetrieveSerializers, LoginWriteSerializers
+from ..models import CustomUser
+from ..serializers.customuser_serializers import CustomUserListSerializers, CustomUserRetrieveSerializers, CustomUserWriteSerializers
 from ..utilities.importbase import *
 
-class loginViewsets(viewsets.ModelViewSet):
-    serializer_class = LoginListSerializers
-    permission_classes = [packagesPermission]
-    #authentication_classes = [JWTAuthentication]
+class customuserViewsets(viewsets.ModelViewSet):
+    serializer_class = CustomUserListSerializers
+    # permission_classes = [packagesPermission]
+    # authentication_classes = [JWTAuthentication]
     #pagination_class = MyPageNumberPagination
-    queryset = Login.objects.all()
+    queryset = CustomUser.objects.all()
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
@@ -23,14 +22,13 @@ class loginViewsets(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset
         #return queryset.filter(user_id=self.request.user.id)
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
-            return LoginWriteSerializers
+            return CustomUserWriteSerializers
         elif self.action == 'retrieve':
-            return LoginRetrieveSerializers
+            return CustomUserRetrieveSerializers
         return super().get_serializer_class()
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")

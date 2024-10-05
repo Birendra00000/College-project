@@ -1,16 +1,16 @@
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from ..models import User
-from ..serializers.user_serializers import UserListSerializers, UserRetrieveSerializers, UserWriteSerializers
+from ..models import Review
+from ..serializers.review_serializers import ReviewListSerializers, ReviewRetrieveSerializers, ReviewWriteSerializers
 from ..utilities.importbase import *
 
-class userViewsets(viewsets.ModelViewSet):
-    serializer_class = UserListSerializers
+class reviewViewsets(viewsets.ModelViewSet):
+    serializer_class = ReviewListSerializers
     # permission_classes = [packagesPermission]
     # authentication_classes = [JWTAuthentication]
     #pagination_class = MyPageNumberPagination
-    queryset = User.objects.all()
+    queryset = Review.objects.all()
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
@@ -27,9 +27,9 @@ class userViewsets(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
-            return UserWriteSerializers
+            return ReviewWriteSerializers
         elif self.action == 'retrieve':
-            return UserRetrieveSerializers
+            return ReviewRetrieveSerializers
         return super().get_serializer_class()
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
