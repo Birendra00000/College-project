@@ -7,6 +7,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/Register/Register";
 import Contact from "./pages/contact/Contact";
 import Packages from "./pages/packages/Packages";
+import About from "./pages/aboutUS/About";
 
 function App() {
   const LayOut = () => {
@@ -35,6 +36,10 @@ function App() {
         {
           path: "/packages",
           element: <Packages />,
+        },
+        {
+          path: "/aboutUs",
+          element: <About />,
         },
 
         {

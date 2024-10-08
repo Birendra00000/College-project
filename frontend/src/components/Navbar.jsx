@@ -3,6 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaCircleUser } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [hoverSearch, setHoverSearch] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -39,10 +40,10 @@ const Navbar = () => {
           <div className=" items-center gap-6 hidden  md:flex lg:flex">
             <>
               {" "}
-              <p>HOME</p>
-              <p>PACKAGES</p>
-              <p>ABOUT US</p>
-              <p>CONTACT</p>
+              <Link to="/">HOME</Link>
+              <Link to="/packages">PACKAGES</Link>
+              <Link to="/aboutUs">ABOUT US</Link>
+              <Link to="/contactus">CONTACT</Link>
             </>
           </div>
           <span className="flex items-center gap-6 relative">
@@ -58,10 +59,12 @@ const Navbar = () => {
                 placeholder="Search"
               />
             )}
-            <span className="w-[35px] h-[35px] rounded-full border border-black flex justify-center items-center">
-              {" "}
-              <FaCircleUser size={25} />
-            </span>
+            <Link to="/login">
+              <span className="w-[35px] h-[35px] rounded-full border border-black flex justify-center items-center">
+                {" "}
+                <FaCircleUser size={25} />
+              </span>
+            </Link>
           </span>
           <div className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
             <RxHamburgerMenu size={25} />
@@ -75,7 +78,7 @@ const Navbar = () => {
             ref={refCurrent}
           >
             <span
-              className="p-2 flex justify-end"
+              className="p-2 flex justify-end cursor-pointer"
               onClick={() => setMenuOpen(false)}
             >
               {" "}
@@ -85,7 +88,7 @@ const Navbar = () => {
               <p>HOME</p>
               <p>PACKAGES</p>
               <p>ABOUT US</p>
-              <p>CONTACT</p>
+              <Link to="/contactus">CONTACT</Link>
             </div>
           </div>
         </div>
