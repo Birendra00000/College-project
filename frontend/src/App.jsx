@@ -8,6 +8,8 @@ import Register from "./pages/Register/Register";
 import Contact from "./pages/contact/Contact";
 import Packages from "./pages/packages/Packages";
 import About from "./pages/aboutUS/About";
+import AdminDashBoard from "./pages/AdminDashBoard/AdminDashBoard";
+import AdminDestination from "./pages/AdminDashBoard/AdminDestination";
 
 function App() {
   const LayOut = () => {
@@ -61,6 +63,14 @@ function App() {
     //   path: "/register",
     //   element: <Register />,
     // },
+    {
+      path: "/admin/dashboard",
+      element: <AdminDashBoard />,
+    },
+    {
+      path: "/admin/destinations",
+      element: <AdminDestination />,
+    },
   ]);
 
   return <RouterProvider router={router} />;
