@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+@layer utilities {
+  .bg-custom-gradient {
+    background: linear-gradient(90deg, #000b02 6.34%, #2f2e36 37.81%);
+  }
+  .bg-custom-url {
+    background-image: url("/assests/hero.png");
+    background-size: cover;
+    background-position: center;
+  }
+  .bg-custom-url-woman {
+    background-image: url("/assests/woman.png");
+    background-size: cover;
+    background-position: center;
+  }
+  /* For Name */
+  .input-box1:valid ~ .placeholder1,
+  .input-box1:focus ~ .placeholder1 {
+    color: white;
+    background-color: black;
+    transform: translateY(-20px) scale(0.8);
+  }
+
+  /* For Email */
+  .input-box2:valid ~ .placeholder2,
+  .input-box2:focus ~ .placeholder2 {
+    color: white;
+    background-color: black;
+    transform: translateY(-20px) scale(0.8);
+  }
+
+  /* For Password */
+  .input-boxpassword:valid ~ .placeholderpassword,
+  .input-boxpassword:focus ~ .placeholderpassword {
+    color: white;
+    background-color: black;
+    transform: translateY(-20px) scale(0.8);
+  }
+}
