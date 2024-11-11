@@ -42,7 +42,7 @@ const Form = ({ titletype }) => {
                 className="input-box1 p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-full sm:w-10/12"
                 required
               />
-              <span className="absolute text-white w-[140px] left-4 top-[60px] text-sm transition-all duration-300">
+              <span className="placeholder1 absolute text-white w-[140px]  left-4 top-[60px] text-sm transition-all duration-300">
                 Enter your name
               </span>
             </>
@@ -55,7 +55,7 @@ const Form = ({ titletype }) => {
                 className="input-box2 p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-full sm:w-10/12"
                 required
               />
-              <span className="absolute text-white w-[140px] left-4 top-[158px] text-sm transition-all duration-300">
+              <span className="placeholder2 absolute text-white w-[140px] left-4 top-[158px] text-sm transition-all duration-300">
                 Enter your email
               </span>
             </>
@@ -71,7 +71,7 @@ const Form = ({ titletype }) => {
                   className="input-boxpassword p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-full sm:w-10/12"
                   required
                 />
-                <span className="absolute text-white w-[165px] left-4 top-[256px] text-sm transition-all duration-300">
+                <span className="placeholderpassword absolute text-white w-[165px] left-4 top-[256px] text-sm transition-all duration-300">
                   Enter your password
                 </span>
               </>

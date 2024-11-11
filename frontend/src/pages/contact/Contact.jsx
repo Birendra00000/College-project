@@ -7,7 +7,7 @@ const Contact = () => {
   return (
     <>
       <div className="bg-black w-full h-[400px] flex justify-center text-center">
-        <div className="flex flex-col gap-5 mt-5 px-4 lg:px-0">
+        <div className="flex flex-col gap-5 mt-5 px-4 lg:px-0 w-full">
           <p className="text-white text-2xl lg:text-4xl font-bold">
             Get in touch with us
           </p>
@@ -21,17 +21,19 @@ const Contact = () => {
           </span>
           <div className=" mt-10 w-full ">
             <div className="flex gap-5 w-full  justify-center">
-              <span className="w-[250px] h-[180px] bg-[#F8F8F8] flex flex-col items-center justify-center gap-5 rounded-sm">
+              <span className="w-[30%] h-[180px] bg-[#F8F8F8] flex flex-col items-center justify-center gap-5 rounded-sm">
                 <MdOutlineEmail size={30} />
-                <p>bibekbhusal200@gmail.com</p>
+                <p className="text-[12px] md:text-base flex flex-wrap w-full overflow-auto justify-center">
+                  bibekbhusal200@gmail.com
+                </p>
               </span>
-              <span className="w-[250px] h-[180px] bg-[#F8F8F8] flex flex-col items-center justify-center gap-5 rounded-sm">
+              <span className="w-[30%] h-[180px] bg-[#F8F8F8] flex flex-col items-center justify-center gap-5 rounded-sm">
                 <IoCallOutline size={30} />
-                <p>+977 9852635151</p>
+                <p className="text-[12px] md:text-base">+977 9852635151</p>
               </span>
-              <span className="w-[250px] h-[180px] bg-[#F8F8F8] flex flex-col items-center justify-center gap-5 rounded-sm ">
+              <span className="w-[30%] h-[180px] bg-[#F8F8F8] flex flex-col items-center justify-center gap-5 rounded-sm ">
                 <CiLocationOn size={30} />
-                <p>Kathmandu, Nepal</p>
+                <p className="text-[12px] md:text-base">Kathmandu, Nepal</p>
               </span>
             </div>
           </div>

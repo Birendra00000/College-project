@@ -3,10 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Poppins", sans-serif;
-}
-
 @layer utilities {
   .bg-custom-gradient {
     background: linear-gradient(90deg, #000b02 6.34%, #2f2e36 37.81%);
