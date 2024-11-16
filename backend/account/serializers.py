@@ -32,7 +32,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
             email=self.validated_data['email'],
             username=self.validated_data['username'],
             first_name=self.validated_data['first_name'],
-            last_name=self.validated_data['last_name']
+            last_name=self.validated_data['last_name'],
+            is_staff=self.validated_data.get('is_staff', False)
         )
         account.set_password(self.validated_data['password'])
         account.save()
