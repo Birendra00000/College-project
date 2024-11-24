@@ -18,7 +18,6 @@ class Packages(models.Model):
 # Destinations model
 class Destinations(models.Model):
     ITINERARY_CHOICES = [(i, f"{i} days") for i in range(1, 11)]  # Generates choices from 1 to 10 days
-
     destination_name = models.CharField(max_length=100)
     packages = models.ManyToManyField(Packages, related_name="destinations")
     price = models.DecimalField(max_digits=10, decimal_places=2)
