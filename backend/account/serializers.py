@@ -8,7 +8,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
     is_staff = serializers.BooleanField(default=False)
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'confirm_password', 'first_name', 'last_name', 'isAdmin','is_staff',]
+        fields = ['username', 'email', 'password', 'confirm_password','is_staff','isAdmin' #'first_name', 'last_name',
+        ]
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -31,8 +32,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account = User(
             email=self.validated_data['email'],
             username=self.validated_data['username'],
-            first_name=self.validated_data['first_name'],
-            last_name=self.validated_data['last_name'],
+            #first_name=self.validated_data['first_name'],
+            #last_name=self.validated_data['last_name'],
             is_staff=self.validated_data.get('is_staff', False)
         )
         account.set_password(self.validated_data['password'])

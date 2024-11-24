@@ -40,7 +40,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('api/',include('packages.urls')),
-    path('account/',include("account.urls")),
+    path('account/',include('account.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

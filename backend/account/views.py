@@ -8,6 +8,8 @@ from account import signals
 def register(request):
     if request.method == 'POST':
         serializer = RegistrationSerializer(data = request.data)
+        #permission_classes = [permissions.AllowAny]
+
 
         data = {}
 
@@ -19,7 +21,5 @@ def register(request):
             data['token'] = token
 
         else:
-            return Response(serializer.errors)
-        
-        
-        return Response(data)
+            return Response(serializer.errors,status=400)
+        return Response(data,status=201)
