@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Activity model
 class Activities(models.Model):
     activity_name = models.CharField(max_length=100)
@@ -18,7 +18,6 @@ class Packages(models.Model):
 # Destinations model
 class Destinations(models.Model):
     ITINERARY_CHOICES = [(i, f"{i} days") for i in range(1, 11)]  # Generates choices from 1 to 10 days
-
     destination_name = models.CharField(max_length=100)
     packages = models.ManyToManyField(Packages, related_name="destinations")
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -51,4 +50,12 @@ class BookingItem(models.Model):
     number_of_people = models.PositiveIntegerField(default=1)  # Number of items booked
 
     def __str__(self):
-        return f"Booking for {self.package_name} - Status: {self.status}"
+        return f"Booking for {self.destination_name} - Status: {self.status}"
+
+class Bookmark(models.Model):
+    user = models.ForeignKey(User,on_delete =models.CASCADE, related_name='bookmarks')
+    destinations = models.ForeignKey('Destinations', on_delete=models.CASCADE, related_name='bookmarks')
+    created_at = models.DateTimeField(auto_now_add=True)  # Timestamp when the bookmark was created
+
+    def __str__(self):
+        return f"{self.user.username} bookmarked {self.destinations.destination_name}"

@@ -1,4 +1,4 @@
-from .models import Activities,Packages,Destinations,BookingItem
+from .models import Activities,Packages,Destinations,BookingItem,Bookmark
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -22,3 +22,9 @@ class BookingItemSerializer(serializers.ModelSerializer):
         model = BookingItem
         fields = ['id', 'destination_name', 'booking_date', 'status', 'number_of_people']
         read_only_fields = ['user', 'booking_date']
+
+class BookmarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bookmark
+        fields = ['id', 'user', 'destinations', 'created_at']
+        read_only_fields = ['id', 'created_at', 'user']
