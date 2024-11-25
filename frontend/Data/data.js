@@ -44,3 +44,38 @@ export const accordionData = [
       "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
   },
 ];
+
+export const SearchPlaces = [
+  {
+    image: "/assests/mustang.png",
+    location: "MUSTANG,NEPAL",
+  },
+  {
+    image: "/assests/illam.png",
+    location: "Illam,NEPAL",
+  },
+  {
+    image: "/assests/tilicho.png",
+    location: "Manang,NEPAL",
+  },
+  {
+    image: "/assests/mustang.png",
+    location: "MUSTANG,NEPAL",
+  },
+  {
+    image: "/assests/illam.png",
+    location: "Illam,NEPAL",
+  },
+  {
+    image: "/assests/tilicho.png",
+    location: "Manang,NEPAL",
+  },
+  {
+    image: "/assests/mustang.png",
+    location: "MUSTANG,NEPAL",
+  },
+  {
+    image: "/assests/illam.png",
+    location: "Illam,NEPAL",
+  },
+];

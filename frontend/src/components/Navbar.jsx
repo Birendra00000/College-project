@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-center w-full shadow-lg">
       <div
-        className="flex w-full md:w-[80%] lg:w-[80%] items-center justify-between p-5"
+        className="flex w-full md:w-[80%] lg:w-[80%] items-center justify-between p-4"
         onMouseLeave={() => setHoverSearch(false)}
       >
         <span className="font-black text text-2xl">

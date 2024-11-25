@@ -1,30 +1,16 @@
 import React from "react";
 import Button from "../../components/resuable/Button";
 import { useState } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import { IoCalendarOutline } from "react-icons/io5";
-import { HiMiniUsers } from "react-icons/hi2";
+
 import { cardData } from "../../../Data/data";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalfAlt } from "react-icons/fa";
 import FAQ from "../../components/home/FAQ";
 import HomeFooter from "../../components/home/HomeFooter";
+import HomeSearchPlaces from "../../components/home/HomeSearchPlaces";
 
 const Home = () => {
   const [value, onChange] = useState(new Date());
-  const [selectedOption, setSelectedOption] = useState("Travellers");
-  const [closeSelect, setCloseSelect] = useState(true);
-  const options = ["Travellers", "Tourists", "Guests"];
-
-  const toggleSelectVisibility = () => {
-    setCloseSelect((prev) => !prev);
-  };
-
-  const handleClickSelect = (option) => {
-    setSelectedOption(option);
-    setCloseSelect(true);
-  };
 
   return (
     <>
@@ -53,44 +39,7 @@ const Home = () => {
       </div>
 
       {/* Search Section */}
-      <div className="w-full flex justify-center h-auto md:h-[100px] md:absolute bottom-0 md:-bottom-2 p-2">
-        <div className="w-full lg:w-[70%] flex flex-row md:flex-row items-center justify-center bg-white shadow-2xl rounded-md p-4 gap-4">
-          <div className="w-full flex flex-col md:flex-row gap-4 items-center ">
-            <input
-              type="search"
-              placeholder="Visit new places"
-              className="border p-2 w-full md:w-auto bg-[#EAEAEA] outline-none text-sm"
-            />
-            <span className="flex p-1 bg-[#EAEAEA] w-full md:w-[150px] gap-x-2 items-center justify-center h-[40px] text-gray-700 text-sm rounded-md">
-              <IoCalendarOutline />
-              <button>Check In</button>
-            </span>
-            <span className="flex p-1 bg-[#EAEAEA] w-full md:w-[150px] h-[40px] text-gray-700 text-sm rounded-md gap-x-2 items-center justify-center">
-              <IoCalendarOutline />
-              <button>Check Out</button>
-            </span>
-            <span
-              className="flex p-1 bg-[#EAEAEA] w-full md:w-[150px] h-[40px] text-gray-700 text-sm rounded-md gap-x-2 items-center justify-center cursor-pointer relative"
-              onClick={toggleSelectVisibility}
-            >
-              <HiMiniUsers /> <button>{selectedOption}</button>
-            </span>
-            {!closeSelect && (
-              <div className="absolute top-full mt-3  bg-white border border-gray-300 rounded shadow-lg w-[300px] right-[15%]">
-                {options.map((option) => (
-                  <div
-                    key={option}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
-                    onClick={() => handleClickSelect(option)}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      <HomeSearchPlaces />
 
       {/* Explore Destinations */}
       <div className="flex w-full justify-center  md:mt-20 mb-10 ">
