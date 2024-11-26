@@ -162,13 +162,15 @@ CORS_ALLOW_METHODS = (
     "PUT",
 )
 
-CORS_ALLOW_HEADERS = (
-    "accept",
-    "authorization",
+CORS_ALLOW_HEADERS = [
     "content-type",
-    "user-agent",
-    "x-csrftoken",
+    "authorization",
     "x-requested-with",
-)
+    "accept",
+    "origin",
+    "user-agent",
+    "withcredentials",
+]
+
 
 

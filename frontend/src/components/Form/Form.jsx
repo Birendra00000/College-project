@@ -8,17 +8,15 @@ const Form = ({ titletype }) => {
   //for Submitting form
   console.log(BaseUrl); // This should log an Axios instance
 
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
+  const [formData, setFormData] = useState(
+    titletype === "login"
+      ? { email: "", password: "" } // Only email and password for login
+      : { username: "", email: "", password: "", confirm_password: "" } // All fields for registration
+  );
   const mutation = useMutation({
     mutationFn: async (formData) => {
       const endPoint =
-        titletype === "login" ? "/accounts/login/" : "/account/register/";
+        titletype === "login" ? "/account/login/" : "/account/register/";
       const response = await BaseUrl.post(endPoint, formData, {
         headers: {
           "Content-Type": "application/json",
@@ -45,10 +43,13 @@ const Form = ({ titletype }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted", formData); // Check if this logs the correct form data.
     // For login, remove the name field before submission
-    const dataToSubmit = { ...formData };
-    if (titletype === "login") delete dataToSubmit.name;
+    const dataToSubmit =
+      titletype === "login"
+        ? { email: formData.email, password: formData.password }
+        : { ...formData };
+    // Remove unnecessary fields for login
+    console.log("Form submitted", formData); // Check if this logs the correct form data.
 
     mutation.mutate(dataToSubmit);
   };
@@ -86,7 +87,7 @@ const Form = ({ titletype }) => {
             {titletype === "login" ? (
               ""
             ) : (
-              <>
+              <span className="relative">
                 <p className="text-base font-medium">
                   Name <span className="text-red-400">*</span>
                 </p>
@@ -102,7 +103,7 @@ const Form = ({ titletype }) => {
                 <span className="placeholder1 absolute text-white w-[140px]  left-4 top-[60px] text-sm transition-all duration-300">
                   Enter your name
                 </span>
-              </>
+              </span>
             )}
             <>
               <p className="text-base font-medium mt-6">
@@ -116,7 +117,13 @@ const Form = ({ titletype }) => {
                 onChange={handleChange}
                 required
               />
-              <span className="placeholder2 absolute text-white w-[140px] left-4 top-[158px] text-sm transition-all duration-300">
+              <span
+                className={`placeholder2 absolute text-white w-[140px] ${
+                  titletype === "login"
+                    ? " top-[82px] left-4 text-sm"
+                    : " top-[158px]  left-4 "
+                } text-sm transition-all duration-300`}
+              >
                 Enter your email
               </span>
             </>
@@ -126,32 +133,42 @@ const Form = ({ titletype }) => {
               </p>
               <input
                 type="password"
-                name="newPassword"
+                name="password"
                 className="input-boxpassword p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-full sm:w-10/12"
-                value={formData.newPassword}
+                value={formData.password}
                 onChange={handleChange}
                 required
               />
-              <span className="placeholderpassword absolute text-white w-[165px] left-4 top-[256px] text-sm transition-all duration-300">
+              <span
+                className={`placeholderpassword absolute ${
+                  titletype === "login"
+                    ? "top-[180px] left-4"
+                    : "left-4 top-[256px]"
+                } text-white w-[165px]  text-sm transition-all duration-300`}
+              >
                 Enter your new password
               </span>
             </>{" "}
-            <>
-              <p className="text-base font-medium mt-6">
-                Password <span className="text-red-400">*</span>
-              </p>
-              <input
-                type="password"
-                name="confirmPassword"
-                className="input_confirmboxpassword p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-full sm:w-10/12"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-              <span className="confirmplaceholderpassword absolute text-white w-[165px] left-4 top-[256px] text-sm transition-all duration-300">
-                Enter your confirm password
-              </span>
-            </>
+            {titletype === "login" ? (
+              ""
+            ) : (
+              <>
+                <p className="text-base font-medium mt-6">
+                  Confirm Password <span className="text-red-400">*</span>
+                </p>
+                <input
+                  type="password"
+                  name="confirm_password"
+                  className="input_confirmboxpassword p-2 bg-black border border-slate-400 outline-none mt-2 rounded-md w-full sm:w-10/12"
+                  value={formData.confirm_password}
+                  onChange={handleChange}
+                  required
+                />
+                <span className="confirmplaceholderpassword absolute text-white w-[353px] left-4 top-[353px] text-sm transition-all duration-300">
+                  Enter your confirm password
+                </span>
+              </>
+            )}
           </span>
 
           <Button

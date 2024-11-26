@@ -41,8 +41,8 @@
     transform: translateY(-20px) scale(0.8);
   }
 
-  .input_confirmboxpassword:valid ~ .placeholderpassword,
-  .input_confirmboxpassword:focus ~ .placeholderpassword {
+  .input_confirmboxpassword:valid ~ .confirmplaceholderpassword,
+  .input_confirmboxpassword:focus ~ .confirmplaceholderpassword {
     color: white;
     background-color: black;
     transform: translateY(-20px) scale(0.8);

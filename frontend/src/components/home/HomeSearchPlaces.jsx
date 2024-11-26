@@ -135,11 +135,11 @@ function MyVerticallyCenteredModal(props) {
         <h5>Visit New Places</h5>{" "}
       </div>{" "}
       <div className="grid grid-cols-4 justify-between p-4 w-full text-sm flex-nowrap">
-        {SearchPlaces?.map((item) => {
+        {SearchPlaces?.map((item, index) => {
           return (
             <>
               {" "}
-              <span className="col-span-1">
+              <span className="col-span-1" key={item.id}>
                 <img
                   src={item.image}
                   alt=""
