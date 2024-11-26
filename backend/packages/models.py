@@ -22,6 +22,9 @@ class Destinations(models.Model):
     packages = models.ManyToManyField(Packages, related_name="destinations")
     price = models.DecimalField(max_digits=10, decimal_places=2)
     images = models.ImageField(upload_to='images/', blank=True, null=True)
+    images_1 = models.ImageField(upload_to='images/', blank=True, null=True)
+    images_2 = models.ImageField(upload_to='images/', blank=True, null=True)
+    description = models.CharField(max_length=2000)
     itinerary = models.IntegerField(choices=ITINERARY_CHOICES)  
     activities = models.ManyToManyField(Activities, related_name="destinations")
     RATING_CHOICES = [(i, f"{i}*") for i in range(1, 5)]

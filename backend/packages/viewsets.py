@@ -37,7 +37,6 @@ class DestinationsViewSet(viewsets.ModelViewSet):
     search_fields = ['destination_name']
     
 
-
 class BookingItemViewSet(viewsets.ModelViewSet):
     queryset = BookingItem.objects.all()
     serializer_class = BookingItemSerializer
