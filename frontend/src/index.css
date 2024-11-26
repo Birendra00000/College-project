@@ -3,10 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Poppins", sans-serif;
-}
-
 @layer utilities {
   .bg-custom-gradient {
     background: linear-gradient(90deg, #000b02 6.34%, #2f2e36 37.81%);
@@ -40,6 +36,13 @@ body {
   /* For Password */
   .input-boxpassword:valid ~ .placeholderpassword,
   .input-boxpassword:focus ~ .placeholderpassword {
+    color: white;
+    background-color: black;
+    transform: translateY(-20px) scale(0.8);
+  }
+
+  .input_confirmboxpassword:valid ~ .confirmplaceholderpassword,
+  .input_confirmboxpassword:focus ~ .confirmplaceholderpassword {
     color: white;
     background-color: black;
     transform: translateY(-20px) scale(0.8);
