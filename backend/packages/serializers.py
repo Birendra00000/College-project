@@ -15,7 +15,8 @@ class PackagesSerializer(serializers.HyperlinkedModelSerializer):
 class DestinationsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Destinations
-        fields = ['url', 'destination_name', 'packages', 'price','itinerary','rating','review']
+        fields = ['url', 'destination_name','images','images_1','images_2', 'packages', 'price','itinerary'#'rating','review'
+        ]
 
 class BookingItemSerializer(serializers.ModelSerializer):
     class Meta:

@@ -9,8 +9,6 @@ def register(request):
     if request.method == 'POST':
         serializer = RegistrationSerializer(data = request.data)
         #permission_classes = [permissions.AllowAny]
-
-
         data = {}
 
         if serializer.is_valid():
