@@ -4,7 +4,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework import generics, permissions
-from .serializers import ActivitiesSerializer,PackagesSerializer,BookingItemSerializer,DestinationsSerializer,BookmarkSerializer
+from .serializers import ActivitiesSerializer,PackagesSerializer,BookingItemSerializer,DestinationsListSerializer,BookmarkSerializer,DestinationsDetailSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 
@@ -30,12 +30,22 @@ class PackagesViewSet(viewsets.ModelViewSet):
 
 
 
+#class DestinationsViewSet(viewsets.ModelViewSet):
+#    queryset = Destinations.objects.all()
+    # serializer_class = DestinationsSerializer
+    # #permission_classes = [IsAuthenticated]
+    # search_fields = ['destination_name']
+    
 class DestinationsViewSet(viewsets.ModelViewSet):
     queryset = Destinations.objects.all()
-    serializer_class = DestinationsSerializer
-    #permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':  # Detail view
+            return DestinationsDetailSerializer
+        return DestinationsListSerializer  # List view
+
     search_fields = ['destination_name']
-    
+
 
 class BookingItemViewSet(viewsets.ModelViewSet):
     queryset = BookingItem.objects.all()

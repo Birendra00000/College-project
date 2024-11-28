@@ -25,10 +25,10 @@ class Destinations(models.Model):
     images_1 = models.ImageField(upload_to='images/', blank=True, null=True)
     images_2 = models.ImageField(upload_to='images/', blank=True, null=True)
     description = models.CharField(max_length=2000)
-    itinerary = models.IntegerField(choices=ITINERARY_CHOICES)  
+    itinerary = models.IntegerField(choices=ITINERARY_CHOICES,blank=True,null=True)  
     activities = models.ManyToManyField(Activities, related_name="destinations")
     RATING_CHOICES = [(i, f"{i}*") for i in range(1, 5)]
-    rating =  models.IntegerField(choices=RATING_CHOICES)
+    rating =  models.IntegerField(choices=RATING_CHOICES,blank=True,null=True)
     review = models.CharField(max_length=500)
 
     # Dropdown for 1 to 10 days
