@@ -1,22 +1,31 @@
-from .models import Activities,Packages,Destinations,BookingItem
 from django.urls import include, path
-from rest_framework import routers, serializers, viewsets
-from rest_framework.filters  import SearchFilter, OrderingFilter
-from django_filters .rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
-from .viewsets import ActivitiesViewSet,PackagesViewSet,DestinationsViewSet,BookingItemViewSet,BookmarkViewSet
+from rest_framework.routers import DefaultRouter
+from .viewsets import (
+    ActivitiesViewSet,
+    PackagesViewSet,
+    DestinationsViewSet,
+    BookingItemViewSet,
+    BookmarkViewSet,
+    ViewBookmarkViewSet,
+    DestinationDetailViewSet,
+    SearchDestinationsViewSet,
+    UpdateDestinationViewSet,
+    DeleteDestinationViewSet,
+)
 
-
-# Routers provide a way of automatically determining the URL conf.
-router = routers.DefaultRouter()
+# Define the router and register standard viewsets
+router = DefaultRouter()
 router.register(r'activities', ActivitiesViewSet)
-router.register(r'Packages', PackagesViewSet)
+router.register(r'packages', PackagesViewSet)
 router.register(r'destinations', DestinationsViewSet)
 router.register(r'bookingitem', BookingItemViewSet)
-router.register(r'bookmark',BookmarkViewSet)
+router.register(r'bookmark', BookmarkViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    
-    
+    path('', include(router.urls)),  # Include standard router URLs
+    path('destinations/search/', SearchDestinationsViewSet.as_view({'get': 'list'}), name='search_destinations'),
+    path('destinations/<int:pk>/update/', UpdateDestinationViewSet.as_view({'put': 'update'}), name='update_destination'),
+    path('destinations/<int:pk>/delete/', DeleteDestinationViewSet.as_view({'delete': 'destroy'}), name='delete_destination'),
+    path('bookmarks/view/', ViewBookmarkViewSet.as_view({'get': 'list'}), name='view_bookmarks'),
+    path('destinations/<int:pk>/details/', DestinationDetailViewSet.as_view({'get': 'retrieve'}), name='destination_detail'),
 ]
