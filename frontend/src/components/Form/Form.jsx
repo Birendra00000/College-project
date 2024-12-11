@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Button from "../resuable/Button";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import BaseUrl from "../../AxiosInstance/BaseUrl";
-
 const Form = ({ titletype }) => {
   //for Submitting form
-  console.log(BaseUrl); // This should log an Axios instance
-
+  // console.log(BaseUrl); // This should log an Axios instance
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(
     titletype === "login"
       ? { email: "", password: "" } // Only email and password for login
@@ -22,10 +21,19 @@ const Form = ({ titletype }) => {
           "Content-Type": "application/json",
         },
       });
+      return response.data; // Return the response data containing the token
     },
     onSuccess: (data) => {
       console.log("Data submitted successfully:", data);
       alert("Data submitted successfully!");
+      if (titletype === "login") {
+        // On successful login, set the token in localStorage (or cookies)
+        localStorage.setItem("authToken", data.token); // Save the token in localStorage
+        console.log("Token saved:", data.token);
+
+        // Redirect to a protected route after successful login (e.g., user dashboard)
+        navigate("/"); // Change the path as per your app's structure
+      }
     },
     onError: (error) => {
       console.error("Error submitting data:", error);

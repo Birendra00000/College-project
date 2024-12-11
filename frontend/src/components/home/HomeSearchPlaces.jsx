@@ -3,10 +3,6 @@ import { IoCalendarOutline } from "react-icons/io5";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { HiMiniUsers } from "react-icons/hi2";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { SearchPlaces } from "../../../Data/data";
 
 const HomeSearchPlaces = () => {
   const [selectedOption, setSelectedOption] = useState("Travellers");
@@ -16,13 +12,6 @@ const HomeSearchPlaces = () => {
   const [showCheckOutCalendar, setShowCheckOutCalendar] = useState(false);
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
-  const [modalShow, setModalShow] = React.useState(false);
-  const [searchPlaces, setSearchPlaces] = useState([
-    "Illam",
-    "Pokhara",
-    "Mustang",
-    "Everest Base Camp",
-  ]);
 
   const toggleSelectVisibility = () => {
     setCloseSelect((prev) => !prev);
@@ -112,50 +101,50 @@ const HomeSearchPlaces = () => {
           className="absolute top-[100%] left-[50%]"
         />
       )}
-      <MyVerticallyCenteredModal
+      {/* <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-      />
+      /> */}
     </>
   );
 };
 
 export default HomeSearchPlaces;
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      {" "}
-      <div className="flex p-4 w-full text-lg bottom-b border-slate-400">
-        <h5>Visit New Places</h5>{" "}
-      </div>{" "}
-      <div className="grid grid-cols-4 justify-between p-4 w-full text-sm flex-nowrap">
-        {SearchPlaces?.map((item, index) => {
-          return (
-            <>
-              {" "}
-              <span className="col-span-1" key={item.id}>
-                <img
-                  src={item.image}
-                  alt=""
-                  className="w-[150px] h-[150px] rounded-md"
-                />
-                <h5 className="text-base flex justify-center">
-                  {item.location}
-                </h5>{" "}
-              </span>
-            </>
-          );
-        })}
-      </div>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
+// function MyVerticallyCenteredModal(props) {
+//   return (
+//     <Modal
+//       {...props}
+//       size="lg"
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       {" "}
+//       <div className="flex p-4 w-full text-lg bottom-b border-slate-400">
+//         <h5>Visit New Places</h5>{" "}
+//       </div>{" "}
+//       <div className="grid grid-cols-4 justify-between p-4 w-full text-sm flex-nowrap">
+//         {SearchPlaces?.map((item, index) => {
+//           return (
+//             <>
+//               {" "}
+//               <span className="col-span-1" key={item.id}>
+//                 <img
+//                   src={item.image}
+//                   alt=""
+//                   className="w-[150px] h-[150px] rounded-md"
+//                 />
+//                 <h5 className="text-base flex justify-center">
+//                   {item.location}
+//                 </h5>{" "}
+//               </span>
+//             </>
+//           );
+//         })}
+//       </div>
+//       <Modal.Footer>
+//         <Button onClick={props.onHide}>Close</Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
