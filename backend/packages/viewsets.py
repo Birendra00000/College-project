@@ -46,6 +46,42 @@ class DestinationsViewSet(viewsets.ModelViewSet):
 
     search_fields = ['destination_name']
 
+class SearchDestinationsViewSet(viewsets.ModelViewSet):
+    queryset = Destinations.objects.all()
+    def get(self, request,*args,**kwargs):
+        query = request.query_params.get('name', '')
+        if not query:
+            return Response({"error": "No such destination"},status=status.HTTP_400_BAD_REQUEST)
+        destinations = Destinations.objects.filter(destination_name__icontains=query)
+        serializer = DestinationsListSerializer(destinations, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class UpdateDestinationViewSet(viewsets.ModelViewSet):
+    #permission_classes = [IsAdminUser]
+    queryset = Destinations.objects.all()
+    serializer_class = DestinationsDetailSerializer
+    def put(self, request, pk):
+        try:
+            destination = Destinations.objects.get(pk=pk)
+        except Destinations.DoesNotExist:
+            return Response({"error": "Destination not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = DestinationsDetailSerializer(destination, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Destination updated successfully", "data": serializer.data}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DeleteDestinationViewSet(viewsets.ModelViewSet):
+    #permission_classes = [IsAdminUser]
+    queryset = Destinations.objects.all()
+    def delete(self, request, pk):
+        try:
+            destination = Destinations.objects.get(pk=pk)
+            destination.delete()
+            return Response({"message": "Destination deleted successfully"}, status=status.HTTP_200_OK)
+        except Destinations.DoesNotExist:
+            return Response({"error": "Destination not found"}, status=status.HTTP_404_NOT_FOUND)
 
 class BookingItemViewSet(viewsets.ModelViewSet):
     queryset = BookingItem.objects.all()
@@ -66,3 +102,21 @@ class BookmarkViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Automatically associate the logged-in user with the bookmark
         serializer.save(user=self.request.user)
+
+class ViewBookmarkViewSet(viewsets.ModelViewSet):
+    queryset = Bookmark.objects.all()
+    def get(self, request):
+        bookmarks = Bookmark.objects.filter(user=request.user)
+        serializer = BookmarkSerializer(bookmarks, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class DestinationDetailViewSet(viewsets.ModelViewSet):
+    queryset = Destinations.objects.all()
+    def get(self, request, pk):
+        try:
+            destination = Destinations.objects.get(pk=pk)
+        except Destinations.DoesNotExist:
+            return Response({"error": "Destination not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = DestinationsDetailSerializer(destination)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
