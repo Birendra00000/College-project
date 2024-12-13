@@ -41,3 +41,4 @@ class BookmarkSerializer(serializers.ModelSerializer):
         model = Bookmark
         fields = ['id', 'user', 'destinations', 'created_at']
         read_only_fields = ['id', 'created_at', 'user']
+    
