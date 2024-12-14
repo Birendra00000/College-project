@@ -1,5 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+from django.conf import settings
+from django.conf.urls.static import static
 from .viewsets import (
     ActivitiesViewSet,
     PackagesViewSet,
@@ -28,4 +30,4 @@ urlpatterns = [
     path('destinations/<int:pk>/delete/', DeleteDestinationViewSet.as_view({'delete': 'destroy'}), name='delete_destination'),
     path('bookmarks/view/', ViewBookmarkViewSet.as_view({'get': 'list'}), name='view_bookmarks'),
     path('destinations/<int:pk>/details/', DestinationDetailViewSet.as_view({'get': 'retrieve'}), name='destination_detail'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
