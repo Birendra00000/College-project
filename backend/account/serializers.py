@@ -5,41 +5,51 @@ from rest_framework.authtoken.models import Token
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     isAdmin = serializers.SerializerMethodField(read_only=True)
-    is_staff = serializers.BooleanField(default=False)
+    role = serializers.ChoiceField(choices=[('user', 'User'), ('admin', 'Admin')], default='user')
+    
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'confirm_password','is_staff','isAdmin' #'first_name', 'last_name',
-        ]
+        fields = ['username', 'email', 'password', 'confirm_password', 'role', 'isAdmin']
         extra_kwargs = {
             'password': {'write_only': True}
         }
 
     def get_isAdmin(self, obj):
+        # Return the admin status based on is_staff
         return obj.is_staff
 
-    def save(self):
-        password = self.validated_data['password']
-        confirm_password = self.validated_data['confirm_password']
+    def validate(self, data):
+        # Validate password and confirm_password match
+        password = data.get('password')
+        confirm_password = data.get('confirm_password')
 
-        if confirm_password != password:
+        if password != confirm_password:
             raise serializers.ValidationError({'error': "Password and confirm password must be the same!"})
 
-        current_email = User.objects.filter(email=self.validated_data['email'])
-
-        if current_email.exists():
+        # Check if email already exists
+        if User.objects.filter(email=data['email']).exists():
             raise serializers.ValidationError({'error': 'Email is already taken'})
 
-        account = User(
-            email=self.validated_data['email'],
-            username=self.validated_data['username'],
-            #first_name=self.validated_data['first_name'],
-            #last_name=self.validated_data['last_name'],
-            is_staff=self.validated_data.get('is_staff', False)
+        return data
+
+    def create(self, validated_data):
+        # Get role from the data (defaults to 'user' if not provided)
+        role = validated_data.get('role', 'user')
+        
+        # If the role is admin, set is_staff to True
+        is_staff = True if role == 'admin' else False
+
+        # Create the new user and set the password
+        password = validated_data['password']
+        user = User(
+            email=validated_data['email'],
+            username=validated_data['username'],
+            is_staff=is_staff,  # Set the is_staff based on role
         )
-        account.set_password(self.validated_data['password'])
-        account.save()
+        user.set_password(password)
+        user.save()
 
         # Create token for the new user
-        Token.objects.get_or_create(user=account)
+        Token.objects.get_or_create(user=user)
 
-        return account
+        return user

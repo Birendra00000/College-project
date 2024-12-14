@@ -39,7 +39,7 @@ const Home = () => {
       </div>
 
       {/* Search Section */}
-      <HomeSearchPlaces />
+      {/* <HomeSearchPlaces /> */}
 
       {/* Explore Destinations */}
       <CarouselDestination />
