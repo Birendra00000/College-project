@@ -11,6 +11,7 @@ import About from "./pages/aboutUS/About";
 import AdminDashBoard from "./pages/AdminDashBoard/AdminDashBoard";
 import AdminDestination from "./pages/AdminDashBoard/AdminDestination";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UserRedirectPage from "./AuthContext/UserRedirectPage";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,10 @@ function App() {
         {
           path: "/aboutUs",
           element: <About />,
+        },
+        {
+          path: "/userRedirectPage",
+          element: <UserRedirectPage />,
         },
 
         {
