@@ -62,3 +62,14 @@ class Bookmark(models.Model):
 
     def __str__(self):
         return f"{self.user.username} bookmarked {self.destinations.destination_name}"
+
+
+class Payment(models.Model):
+    booking = models.ForeignKey(BookingItem, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = models.CharField(max_length=255)
+    status = models.CharField(max_length=50, default='pending')  # pending, successful, failed, refunded
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Payment for {self.booking} - {self.status}"

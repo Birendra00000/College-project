@@ -139,7 +139,7 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = []
 
 # Media files (Uploaded content)
 MEDIA_URL = '/media/'
@@ -152,7 +152,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
+PAYMENT_GATEWAY_URL = 'http://127.0.0.1:8000/api/payment/'
 
 # cross-origin-resource-sharing setup
 
