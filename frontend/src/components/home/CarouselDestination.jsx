@@ -5,7 +5,7 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { Carousel } from "@mantine/carousel";
 import { Box, Image, Text, Badge } from "@mantine/core";
 import "@mantine/carousel/styles.css";
-
+import { Button } from "@mantine/core";
 const CarouselDestination = () => {
   const fetchDestinations = async () => {
     const { data } = await BaseUrl.get("api/destinations");
@@ -39,7 +39,7 @@ const CarouselDestination = () => {
 
         <Carousel
           slideSize="33.333%"
-          slideGap="md"
+          slideGap="xl"
           align="start"
           loop
           withControls
@@ -96,35 +96,38 @@ const CarouselDestination = () => {
                   {" "}
                   <div
                     key={item.destination_name}
-                    className="bg-[#2B3030] text-white rounded-md"
+                    className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
                   >
                     <img
                       src={item?.images}
-                      alt="card"
+                      alt="destination"
                       className="w-full h-40 object-cover"
                     />
-                    <span className="p-5 flex flex-col">
-                      <p className="text-sm">{item.location}</p>
-                      <span className="flex items-center mt-2 justify-between">
-                        <p className="text-lg font-bold">
+                    <div className="px-3 py-2">
+                      <p className="text-gray-500 text-sm">{item.location}</p>
+                      <div className="flex items-center justify-between mt-2">
+                        <p className="text-lg font-bold text-gray-800">
                           {item.destination_name}
                         </p>
-                        <p>
-                          {item.price} <sup>pp</sup>
+                        <p className="text-gray-700">
+                          ${item.price} <sup>pp</sup>
                         </p>
-                      </span>
-                      <span className="mt-2 text-sm">
-                        <p>{item.desciption}</p>
-                      </span>
-                      <span className="flex items-center gap-2 mt-2">
-                        <span className="flex items-center ">
-                          ratings:
-                          {item.rating}
+                      </div>
+                      <p className="text-gray-600 text-sm mt-2">
+                        {item.desciption}
+                      </p>
+                      <div className="flex items-center gap-2 mt-3 text-yellow-500">
+                        <span className="flex items-center gap-1">
                           <FaStar /> <FaStar /> <FaStarHalfAlt />
-                        </span>{" "}
-                        <p className="mb-0">{item.reviews}</p>
-                      </span>
-                    </span>
+                        </span>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Button variant="filled">View</Button>
+                        <Button variant="filled" color="red">
+                          Book Now{" "}
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </Carousel.Slide>
               </>

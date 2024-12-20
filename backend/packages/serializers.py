@@ -27,8 +27,14 @@ class DestinationsListSerializer(serializers.ModelSerializer):
 class DestinationsDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Destinations
-        fields = ['id', 'destination_name', 'images', 'images_1', 'images_2', 'description', 'price', 'itinerary', #'rating', 
-        'review']
+        fields = ['id', 'destination_name', 'images', 'images_1', 'images_2', 'description', 'price', 
+        'itinerary', #'rating', 
+        'review',
+            'location',        # New field
+            'best_season',     # New field
+            'pradesh',         # New field
+            'map_images'       # New field
+            ]
 
 
 class BookingItemSerializer(serializers.ModelSerializer):

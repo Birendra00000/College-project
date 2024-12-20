@@ -16,26 +16,32 @@ class Packages(models.Model):
         return self.package_name
 
 # Destinations model
+from django.db import models
+
 class Destinations(models.Model):
     ITINERARY_CHOICES = [(i, f"{i} days") for i in range(1, 11)]  # Generates choices from 1 to 10 days
+    RATING_CHOICES = [(i, f"{i}*") for i in range(1, 6)]  # Updates rating choices to 1–5 stars
+
     destination_name = models.CharField(max_length=100)
-    packages = models.ManyToManyField(Packages, related_name="destinations")
+    packages = models.ManyToManyField('Packages', related_name="destinations")
     price = models.DecimalField(max_digits=10, decimal_places=2)
     images = models.ImageField(upload_to='images/', blank=True, null=True)
     images_1 = models.ImageField(upload_to='images/', blank=True, null=True)
     images_2 = models.ImageField(upload_to='images/', blank=True, null=True)
     description = models.CharField(max_length=2000)
-    itinerary = models.IntegerField(choices=ITINERARY_CHOICES,blank=True,null=True)  
-    activities = models.ManyToManyField(Activities, related_name="destinations")
-    RATING_CHOICES = [(i, f"{i}*") for i in range(1, 5)]
-    rating =  models.IntegerField(choices=RATING_CHOICES,blank=True,null=True)
+    itinerary = models.IntegerField(choices=ITINERARY_CHOICES, blank=True, null=True)
+    activities = models.ManyToManyField('Activities', related_name="destinations")
+    rating = models.IntegerField(choices=RATING_CHOICES, blank=True, null=True)
     review = models.CharField(max_length=500)
 
-    # Dropdown for 1 to 10 days
+    # New fields
+    location = models.CharField(max_length=255, blank=True, null=True)  # Optional location field
+    best_season = models.CharField(max_length=100, blank=True, null=True)  # Season to visit
+    pradesh = models.CharField(max_length=50, blank=True, null=True)  # State/Province
+    map_images = models.ImageField(upload_to='map_images/', blank=True, null=True)  # Map image field
 
     def __str__(self):
         return self.destination_name
-
 
 # Booking model
 class BookingItem(models.Model):
