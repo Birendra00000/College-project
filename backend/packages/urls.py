@@ -13,6 +13,7 @@ from .viewsets import (
     SearchDestinationsViewSet,
     UpdateDestinationViewSet,
     DeleteDestinationViewSet,
+    PaymentViewSet,  # New viewset for payment
 )
 
 # Define the router and register standard viewsets
@@ -22,6 +23,11 @@ router.register(r'packages', PackagesViewSet)
 router.register(r'destinations', DestinationsViewSet)
 router.register(r'bookingitem', BookingItemViewSet)
 router.register(r'bookmark', BookmarkViewSet)
+router.register(r'payment', PaymentViewSet)
+
+# Additional router for payment-related routes
+# payment_router = DefaultRouter()
+# payment_router.register(r'payment', PaymentViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),  # Include standard router URLs
@@ -30,4 +36,7 @@ urlpatterns = [
     path('destinations/<int:pk>/delete/', DeleteDestinationViewSet.as_view({'delete': 'destroy'}), name='delete_destination'),
     path('bookmarks/view/', ViewBookmarkViewSet.as_view({'get': 'list'}), name='view_bookmarks'),
     path('destinations/<int:pk>/details/', DestinationDetailViewSet.as_view({'get': 'retrieve'}), name='destination_detail'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('payment/initiate/', PaymentViewSet.as_view({'post': 'initiate_payment'}), name='initiate_payment'),
+    path('payment/verify/<int:payment_id>/', PaymentViewSet.as_view({'get': 'verify_payment'}), name='verify_payment'),
+    path('payment/refund/', PaymentViewSet.as_view({'post': 'process_refund'}), name='process_refund'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

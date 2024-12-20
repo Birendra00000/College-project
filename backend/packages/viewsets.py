@@ -7,6 +7,12 @@ from rest_framework import generics, permissions
 from .serializers import ActivitiesSerializer,PackagesSerializer,BookingItemSerializer,DestinationsListSerializer,BookmarkSerializer,DestinationsDetailSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
+from .models import Payment
+from django.conf import settings
+from .serializers import PaymentSerializer
+from .utils import initiate_payment
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class ActivitiesViewSet(viewsets.ModelViewSet):
@@ -30,12 +36,6 @@ class PackagesViewSet(viewsets.ModelViewSet):
 
 
 
-#class DestinationsViewSet(viewsets.ModelViewSet):
-#    queryset = Destinations.objects.all()
-    # serializer_class = DestinationsSerializer
-    # #permission_classes = [IsAuthenticated]
-    # search_fields = ['destination_name']
-    
 class DestinationsViewSet(viewsets.ModelViewSet):
     queryset = Destinations.objects.all()
     serializer_class = DestinationsListSerializer
@@ -48,6 +48,7 @@ class DestinationsViewSet(viewsets.ModelViewSet):
 
 class SearchDestinationsViewSet(viewsets.ModelViewSet):
     queryset = Destinations.objects.all()
+    serializer_class = DestinationsDetailSerializer
     def get(self, request,*args,**kwargs):
         query = request.query_params.get('name', '')
         if not query:
@@ -75,6 +76,7 @@ class UpdateDestinationViewSet(viewsets.ModelViewSet):
 class DeleteDestinationViewSet(viewsets.ModelViewSet):
     #permission_classes = [IsAdminUser]
     queryset = Destinations.objects.all()
+    serializer_class = DestinationsDetailSerializer
     def delete(self, request, pk):
         try:
             destination = Destinations.objects.get(pk=pk)
@@ -105,6 +107,7 @@ class BookmarkViewSet(viewsets.ModelViewSet):
 
 class ViewBookmarkViewSet(viewsets.ModelViewSet):
     queryset = Bookmark.objects.all()
+    serializer_class = BookingItemSerializer
     def get(self, request):
         bookmarks = Bookmark.objects.filter(user=request.user)
         serializer = BookmarkSerializer(bookmarks, many=True)
@@ -112,6 +115,7 @@ class ViewBookmarkViewSet(viewsets.ModelViewSet):
 
 class DestinationDetailViewSet(viewsets.ModelViewSet):
     queryset = Destinations.objects.all()
+    serializer_class = DestinationsDetailSerializer
     def get(self, request, pk):
         try:
             destination = Destinations.objects.get(pk=pk)
@@ -120,3 +124,51 @@ class DestinationDetailViewSet(viewsets.ModelViewSet):
         serializer = DestinationsDetailSerializer(destination)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+#payment use if necessary otherwise you can integrate with react 
+
+class PaymentViewSet(viewsets.ModelViewSet):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            payment = serializer.save()
+            response = initiate_payment(payment)
+            return Response(response, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PaymentVerifyViewSet(viewsets.ViewSet):
+    def create(self, request, *args, **kwargs):
+        payment_id = request.data.get('payment_id')
+        user_id = request.data.get('user_id')
+        payment = Payment.objects.filter(id=payment_id, user_id=user_id).first()
+        if payment:
+            response = verify_payment(payment)
+            return Response(response, status=status.HTTP_200_OK)
+        return Response({'error': 'Payment not found'}, status=status.HTTP_404)
+
+
+class PaymentStatusViewSet(viewsets.ViewSet):
+    def list(self, request, *args, **kwargs):
+        user_id = request.query_params.get('user_id')
+        booking_id = request.query_params.get('booking_id')
+        payment = Payment.objects.filter(user_id=user_id, booking_id=booking_id).first()
+        if payment:
+            serializer = PaymentSerializer(payment)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'error': 'Payment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class PaymentRefundViewSet(viewsets.ViewSet):
+    def create(self, request, *args, **kwargs):
+        booking_id = request.data.get('booking_id')
+        amount = request.data.get('amount')
+        reason = request.data.get('reason')
+        payment = Payment.objects.filter(booking_id=booking_id).first()
+        if payment:
+            response = process_refund(payment, amount, reason)
+            return Response(response, status=status.HTTP_200_OK)
+        return Response({'error': 'Payment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    

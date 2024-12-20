@@ -1,4 +1,4 @@
-from .models import Activities,Packages,Destinations,BookingItem,Bookmark
+from .models import Activities,Packages,Payment,Destinations,BookingItem,Bookmark
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -49,3 +49,7 @@ class BookmarkSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'destinations', 'created_at']
         read_only_fields = ['id', 'created_at', 'user']
     
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'
