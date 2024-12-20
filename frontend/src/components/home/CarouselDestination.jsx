@@ -8,7 +8,7 @@ import "@mantine/carousel/styles.css";
 
 const CarouselDestination = () => {
   const fetchDestinations = async () => {
-    const { data } = await BaseUrl.get("/api/destinations");
+    const { data } = await BaseUrl.get("api/destinations");
     return data;
   };
 

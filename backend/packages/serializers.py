@@ -21,7 +21,8 @@ class PackagesSerializer(serializers.HyperlinkedModelSerializer):
 class DestinationsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Destinations
-        fields = ['id', 'destination_name', 'images', 'price']
+        fields = ['id', 'destination_name', 'images', 'images_1', 'images_2', 'description', 'price', 'itinerary', #'rating', 
+        'review']
 
 class DestinationsDetailSerializer(serializers.ModelSerializer):
     class Meta:

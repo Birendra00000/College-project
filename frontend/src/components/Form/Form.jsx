@@ -41,7 +41,7 @@ const Form = ({ titletype }) => {
       alert("Data submitted successfully!");
 
       if (titletype === "login") {
-        navigate("/packages"); // Redirect to dashboard
+        navigate("/userRedirectPage"); // Redirect to dashboard
       }
     },
     onError: (error) => {

@@ -3,6 +3,8 @@ import AdminSideBar from "../../components/AdminDashComp/AdminSideBar";
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import AdminNavbar from "../../components/AdminDashComp/AdminNavbar";
+import CreateDestinationModal from "../../components/AdminDashComp/CreateDestinationModal";
+
 const AdminDestination = () => {
   return (
     <div className="flex w-full h-[100vh]">
@@ -33,9 +35,7 @@ const AdminDestination = () => {
                 </span>
               </div>
             </div>{" "}
-            <span className="bg-red-500 text-white w-[80%] rounded-md mt-[3%] text-center">
-              <button className="p-2 font-medium">ADD NEW DESTINATIONS</button>
-            </span>
+            <CreateDestinationModal />
           </div>
         </div>
       </div>
