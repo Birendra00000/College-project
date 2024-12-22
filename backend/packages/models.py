@@ -33,6 +33,10 @@ class Destinations(models.Model):
     activities = models.ManyToManyField('Activities', related_name="destinations")
     rating = models.IntegerField(choices=RATING_CHOICES, blank=True, null=True)
     review = models.CharField(max_length=500)
+    location = models.CharField(max_length=100)
+    best_season = models.CharField(max_length=100)
+    map_image = models.ImageField(upload_to='images/', blank=True, null=True)
+    pradesh = models.CharField(max_length=100)
 
     # New fields
     location = models.CharField(max_length=255, blank=True, null=True)  # Optional location field
