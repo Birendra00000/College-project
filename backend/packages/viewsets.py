@@ -29,7 +29,7 @@ class ActivitiesViewSet(viewsets.ModelViewSet):
 class PackagesViewSet(viewsets.ModelViewSet):
     queryset = Packages.objects.all()
     serializer_class = PackagesSerializer
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     #authentication_classes = [JWTAuthentication]
     search_fields = ['packages_name']
     
@@ -39,6 +39,7 @@ class PackagesViewSet(viewsets.ModelViewSet):
 class DestinationsViewSet(viewsets.ModelViewSet):
     queryset = Destinations.objects.all()
     serializer_class = DestinationsListSerializer
+    permission_classes = [IsAuthenticated]
     def get_serializer_class(self):
         if self.action == 'retrieve':  # Detail view
             return DestinationsDetailSerializer
@@ -47,6 +48,7 @@ class DestinationsViewSet(viewsets.ModelViewSet):
     search_fields = ['destination_name']
 
 class SearchDestinationsViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Destinations.objects.all()
     serializer_class = DestinationsDetailSerializer
     def get(self, request,*args,**kwargs):
@@ -58,7 +60,7 @@ class SearchDestinationsViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UpdateDestinationViewSet(viewsets.ModelViewSet):
-    #permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
     queryset = Destinations.objects.all()
     serializer_class = DestinationsDetailSerializer
     def put(self, request, pk):
@@ -74,7 +76,7 @@ class UpdateDestinationViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DeleteDestinationViewSet(viewsets.ModelViewSet):
-    #permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
     queryset = Destinations.objects.all()
     serializer_class = DestinationsDetailSerializer
     def delete(self, request, pk):
@@ -88,13 +90,13 @@ class DeleteDestinationViewSet(viewsets.ModelViewSet):
 class BookingItemViewSet(viewsets.ModelViewSet):
     queryset = BookingItem.objects.all()
     serializer_class = BookingItemSerializer
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
 class BookmarkViewSet(viewsets.ModelViewSet):
     
     queryset = Bookmark.objects.all()
     serializer_class = BookmarkSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -106,6 +108,7 @@ class BookmarkViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 class ViewBookmarkViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Bookmark.objects.all()
     serializer_class = BookingItemSerializer
     def get(self, request):
@@ -114,6 +117,7 @@ class ViewBookmarkViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class DestinationDetailViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Destinations.objects.all()
     serializer_class = DestinationsDetailSerializer
     def get(self, request, pk):
@@ -127,6 +131,7 @@ class DestinationDetailViewSet(viewsets.ModelViewSet):
 #payment use if necessary otherwise you can integrate with react 
 
 class PaymentViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
 
@@ -139,6 +144,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PaymentVerifyViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
     def create(self, request, *args, **kwargs):
         payment_id = request.data.get('payment_id')
         user_id = request.data.get('user_id')
@@ -150,6 +156,7 @@ class PaymentVerifyViewSet(viewsets.ViewSet):
 
 
 class PaymentStatusViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
     def list(self, request, *args, **kwargs):
         user_id = request.query_params.get('user_id')
         booking_id = request.query_params.get('booking_id')
@@ -161,6 +168,7 @@ class PaymentStatusViewSet(viewsets.ViewSet):
 
 
 class PaymentRefundViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
     def create(self, request, *args, **kwargs):
         booking_id = request.data.get('booking_id')
         amount = request.data.get('amount')

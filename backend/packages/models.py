@@ -30,6 +30,10 @@ class Destinations(models.Model):
     RATING_CHOICES = [(i, f"{i}*") for i in range(1, 5)]
     rating =  models.IntegerField(choices=RATING_CHOICES,blank=True,null=True)
     review = models.CharField(max_length=500)
+    location = models.CharField(max_length=100)
+    best_season = models.CharField(max_length=100)
+    map_image = models.ImageField(upload_to='images/', blank=True, null=True)
+    pradesh = models.CharField(max_length=100)
 
     # Dropdown for 1 to 10 days
 
