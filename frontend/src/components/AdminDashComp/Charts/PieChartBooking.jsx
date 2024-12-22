@@ -35,7 +35,7 @@ const PieChartBooking = () => {
       ],
     };
     return (
-      <div className="col-span-2 bg-white shadow-2xl p-5">
+      <div className="col-span-2 bg-white shadow-2xl md:p-5">
         <CanvasJSChart
           options={options}
           /* onRef={ref => this.chart = ref} */
