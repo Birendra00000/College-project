@@ -30,7 +30,6 @@ class PackagesViewSet(viewsets.ModelViewSet):
     queryset = Packages.objects.all()
     serializer_class = PackagesSerializer
     permission_classes = [IsAuthenticated]
-    #authentication_classes = [JWTAuthentication]
     search_fields = ['packages_name']
     
 
@@ -48,7 +47,7 @@ class DestinationsViewSet(viewsets.ModelViewSet):
     search_fields = ['destination_name']
 
 class SearchDestinationsViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     queryset = Destinations.objects.all()
     serializer_class = DestinationsDetailSerializer
     def get(self, request,*args,**kwargs):

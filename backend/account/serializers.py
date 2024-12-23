@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
-#from .models import UserProfile
+from .models import UserProfile
 
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -42,6 +42,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
         # Create the new user and set the password
         password = validated_data['password']
+        username = validated_data['username']  # Use username as provided
+        email = validated_data['email'] 
         user = User(
             email=validated_data['email'],
             username=validated_data['username'],
@@ -60,22 +62,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 #user profile
 class UserProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.EmailField(source='user.email', read_only=True)
     profile_photo = serializers.ImageField(required=False)
 
     class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'profile_photo']
-
-    def update(self, instance, validated_data):
-        # Update the username and email if they have changed
-        instance.username = validated_data.get('username', instance.username)
-        instance.email = validated_data.get('email', instance.email)
-
-        # Update the profile photo only if it's provided
-        profile_photo = validated_data.get('profile_photo', None)
-        if profile_photo:
-            instance.profile_photo = profile_photo
-
-        # Save the updated instance
-        instance.save()
-        return instance
+        model = UserProfile
+        fields = ['username', 'email', 'profile_photo', 'address', 'phone', 'about_you', 'date_of_birth', 'gender']
