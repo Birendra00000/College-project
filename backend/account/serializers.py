@@ -69,3 +69,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['username', 'email', 'profile_photo', 'address', 'phone', 'about_you', 'date_of_birth', 'gender']
+
+    def update(self, instance, validated_data):
+        # Ensure that username and email are updated on the user model
+        user = instance.user
+        user.username = validated_data.get('username', user.username)
+        user.email = validated_data.get('email', user.email)
+        user.save()
+
+        # Now update other profile fields
+        instance.profile_photo = validated_data.get('profile_photo', instance.profile_photo)
+        instance.save()
+
+        return instance
