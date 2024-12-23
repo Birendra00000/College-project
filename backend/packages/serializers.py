@@ -22,25 +22,19 @@ class DestinationsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Destinations
         fields = ['id', 'destination_name', 'images', 'images_1', 'images_2', 'description', 'price', 'itinerary', #'rating', 
-        'review']
+        'review','location','best_season','map_image','pradesh']
 
 class DestinationsDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Destinations
-        fields = ['id', 'destination_name', 'images', 'images_1', 'images_2', 'description', 'price', 
-        'itinerary', #'rating', 
-        'review',
-            'location',        # New field
-            'best_season',     # New field
-            'pradesh',         # New field
-            'map_images'       # New field
-            ]
+        fields = ['id', 'destination_name', 'images', 'images_1', 'images_2', 'description', 'price', 'itinerary', #'rating', 
+        'review','location','best_season','map_image','pradesh']
 
 
 class BookingItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookingItem
-        fields = ['id', 'destination_name', 'booking_date', 'status', 'number_of_people']
+        fields = ['id', 'destination_name','email','phone_number','nationality','arrival_date','booking_date', 'status', 'number_of_people']
         read_only_fields = ['user', 'booking_date']
 
 class BookmarkSerializer(serializers.ModelSerializer):

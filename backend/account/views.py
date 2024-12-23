@@ -5,6 +5,11 @@ from rest_framework.authtoken.models import Token
 from account import signals
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework import status
+#from .models import UserProfile
+from .serializers import UserProfileSerializer
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['POST'])
 def register(request):
@@ -44,3 +49,23 @@ def custom_login(request):
 
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key, 'isAdmin': user.is_staff}, status=200)
+
+
+#user profile
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserProfileSerializer(user)
+        return Response(serializer.data)
+
+    def post(self, request):
+        user = request.user
+        serializer = UserProfileSerializer(user, data=request.data, partial=True)  # Use partial=True for partial update
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

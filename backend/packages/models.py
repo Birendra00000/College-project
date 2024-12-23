@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+
 # Activity model
 class Activities(models.Model):
     activity_name = models.CharField(max_length=100)
@@ -33,12 +35,11 @@ class Destinations(models.Model):
     activities = models.ManyToManyField('Activities', related_name="destinations")
     rating = models.IntegerField(choices=RATING_CHOICES, blank=True, null=True)
     review = models.CharField(max_length=500)
+    location = models.CharField(max_length=100)
+    best_season = models.CharField(max_length=100)
+    map_image = models.ImageField(upload_to='images/', blank=True, null=True)
+    pradesh = models.CharField(max_length=100)
 
-    # New fields
-    location = models.CharField(max_length=255, blank=True, null=True)  # Optional location field
-    best_season = models.CharField(max_length=100, blank=True, null=True)  # Season to visit
-    pradesh = models.CharField(max_length=50, blank=True, null=True)  # State/Province
-    map_images = models.ImageField(upload_to='map_images/', blank=True, null=True)  # Map image field
 
     def __str__(self):
         return self.destination_name
@@ -47,6 +48,11 @@ class Destinations(models.Model):
 class BookingItem(models.Model):
     destination_name = models.ForeignKey(Destinations, on_delete=models.CASCADE, related_name="bookings")
     booking_date = models.DateTimeField(auto_now_add=True)
+    nationality = models.CharField(max_length=100)
+    arrival_date = models.DateField()
+    booking_date = models.DateTimeField(default=now, editable=False) 
+    email = models.EmailField(max_length=100)
+    phone_number = models.CharField(max_length=20)
     status = models.CharField(
         max_length=50,
         choices=[
