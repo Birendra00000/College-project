@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
+from .models import UserProfile
 
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -53,3 +54,21 @@ class RegistrationSerializer(serializers.ModelSerializer):
         Token.objects.get_or_create(user=user)
 
         return user
+
+
+
+
+#user profile
+class UserProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.EmailField(source='user.email', read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'email', 'profile_photo', 'bio', 'phone', 'address', 'gender', 'date_of_birth']
+    
+    def validate(self, data):
+        # Prevent setting the 'user' field manually during creation
+        if 'user' in data:
+            raise serializers.ValidationError({'error': 'User field cannot be set manually'})
+        return data

@@ -34,7 +34,7 @@ class DestinationsDetailSerializer(serializers.ModelSerializer):
 class BookingItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookingItem
-        fields = ['id', 'destination_name', 'booking_date', 'status', 'number_of_people']
+        fields = ['id', 'destination_name','email','phone_number','nationality','arrival_date','booking_date', 'status', 'number_of_people']
         read_only_fields = ['user', 'booking_date']
 
 class BookmarkSerializer(serializers.ModelSerializer):
