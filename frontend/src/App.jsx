@@ -12,6 +12,8 @@ import AdminDashBoard from "./pages/AdminDashBoard/AdminDashBoard";
 import AdminDestination from "./pages/AdminDashBoard/AdminDestination";
 
 import UserRedirectPage from "./AuthContext/UserRedirectPage";
+import UserDashBoard from "./pages/UserDashBoard/UserDashBoard";
+import UserBookmarks from "./components/UserDashComp/UserBookmarks";
 
 function App() {
   const LayOut = () => {
@@ -69,6 +71,15 @@ function App() {
     //   path: "/register",
     //   element: <Register />,
     // },
+    {
+      path: "/user/profile",
+      element: <UserDashBoard />,
+    },
+    {
+      path: "/user/bookmark",
+      element: <UserBookmarks />,
+    },
+
     {
       path: "/admin/dashboard",
       element: <AdminDashBoard />,

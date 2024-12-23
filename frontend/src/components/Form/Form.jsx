@@ -3,6 +3,8 @@ import Button from "../resuable/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import BaseUrl from "../../AxiosInstance/BaseUrl";
+import AdminDashBoard from "../../pages/AdminDashBoard/AdminDashBoard";
+import UserDashBoard from "../../pages/UserDashBoard/UserDashBoard";
 
 const Form = ({ titletype }) => {
   const navigate = useNavigate();
@@ -41,7 +43,12 @@ const Form = ({ titletype }) => {
       alert("Data submitted successfully!");
 
       if (titletype === "login") {
-        navigate("/userRedirectPage"); // Redirect to dashboard
+        const role = data.isAdmin ? "admin" : "user";
+        if (role === "admin") {
+          navigate("/admin/dashboard"); // Redirect to Admin Dashboard
+        } else {
+          navigate("/user/profile"); // Redirect to User Dashboard
+        }
       }
     },
     onError: (error) => {

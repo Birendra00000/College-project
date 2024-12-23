@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminDashBoard from "../pages/AdminDashBoard/AdminDashBoard";
+import UserDashBoard from "../pages/UserDashBoard/UserDashBoard";
 const UserRedirectPage = () => {
   const [role, setRole] = useState(null);
   const navigate = useNavigate();
@@ -24,18 +25,18 @@ const UserRedirectPage = () => {
       {role === "admin" ? (
         <AdminDashBoard /> // Render Admin Dashboard
       ) : (
-        <UserDashboard /> // Render User Dashboard
+        <UserDashBoard /> // Render User Dashboard
       )}
     </div>
   );
 };
 
 // User Dashboard Component
-const UserDashboard = () => (
-  <div>
-    <h2>Welcome, User</h2>
-    {/* User-specific content */}
-  </div>
-);
+// const UserDashboard = () => (
+//   <div>
+//     <h2>Welcome, User</h2>
+//     {/* User-specific content */}
+//   </div>
+// );
 
 export default UserRedirectPage;

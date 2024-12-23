@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 // Default values for context to avoid errors before wrapping components
 const defaultContextValue = {
@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Get token and isAdmin from localStorage
-  const storedToken = localStorage.getItem("auth_token");
+  const storedToken = localStorage.getItem("authToken");
   const storedIsAdmin = localStorage.getItem("is_admin");
 
   // Function to check if the JWT token is expired
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }) => {
 
   // Function to handle user login
   const logIn = (newToken, isAdminStatus) => {
-    localStorage.setItem("auth_token", newToken);
+    localStorage.setItem("authToken", newToken);
     localStorage.setItem("is_admin", isAdminStatus.toString()); // Store isAdmin as a string
     setToken(newToken);
     setIsAdmin(isAdminStatus);
@@ -63,11 +63,14 @@ const AuthProvider = ({ children }) => {
 
   // Function to handle user logout
   const logOut = () => {
-    localStorage.removeItem("auth_token");
+    console.log("Logging out...");
+
+    localStorage.removeItem("authToken");
     localStorage.removeItem("is_admin");
     setToken(null);
     setIsAdmin(false);
     setIsAuthenticated(false);
+    window.location.href = "/login";
   };
 
   return (
