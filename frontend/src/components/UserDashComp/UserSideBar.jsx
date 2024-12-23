@@ -9,11 +9,8 @@ import { AiOutlineTransaction } from "react-icons/ai";
 import { TbReport } from "react-icons/tb";
 import { LuLogOut } from "react-icons/lu";
 import { FiMenu } from "react-icons/fi"; // Hamburger icon
-import { useAuth } from "../../AuthContext/AuthUser";
 
-const AdminSideBar = () => {
-  const { logOut } = useAuth();
-  console.log("logOut", logOut);
+const UserSideBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to manage sidebar visibility
 
   const toggleSidebar = () => {
@@ -41,18 +38,18 @@ const AdminSideBar = () => {
           />
           <div className="w-full flex justify-center flex-col items-center border-gray-500 border-b pb-5">
             <Link
-              to="/admin/dashboard"
+              to="/user/profile"
               className="text-white flex items-center gap-x-1 p-2 hover:bg-red-600 rounded-md w-full"
             >
               <LuLayoutDashboard />
-              <p>Dashboard</p>
+              <p>Profile</p>
             </Link>
             <Link
-              to="/admin/destinations"
+              to="/user/bookmark"
               className="text-white flex items-center gap-x-1 p-2 hover:bg-red-600 rounded-md w-full"
             >
               <FaCar />
-              <p>Destinations</p>
+              <p>Bookmarks</p>
             </Link>
             <span className="text-white flex items-center gap-x-1 p-2 hover:bg-red-600 rounded-md w-full">
               <FaRegBell />
@@ -79,10 +76,7 @@ const AdminSideBar = () => {
             </span>
           </div>
           <div className="w-full mt-4">
-            <span
-              className="text-white flex items-center gap-x-1 p-2 bg-gray-600 hover:bg-red-600 rounded-md w-full cursor-pointer"
-              onClick={logOut}
-            >
+            <span className="text-white flex items-center gap-x-1 p-2 bg-gray-600 hover:bg-red-600 rounded-md w-full">
               <LuLogOut />
               <p>Logout</p>
             </span>
@@ -101,4 +95,4 @@ const AdminSideBar = () => {
   );
 };
 
-export default AdminSideBar;
+export default UserSideBar;

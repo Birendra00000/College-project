@@ -91,7 +91,7 @@ const CarouselDestination = () => {
               //   </Box>
               // </Carousel.Slide>
               <>
-                {console.log("data", item)}{" "}
+                {/* {console.log("data", item)}{" "} */}
                 <Carousel.Slide key={item.id}>
                   {" "}
                   <div
