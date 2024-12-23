@@ -40,11 +40,6 @@ class Destinations(models.Model):
     map_image = models.ImageField(upload_to='images/', blank=True, null=True)
     pradesh = models.CharField(max_length=100)
 
-    # New fields
-    location = models.CharField(max_length=255, blank=True, null=True)  # Optional location field
-    best_season = models.CharField(max_length=100, blank=True, null=True)  # Season to visit
-    pradesh = models.CharField(max_length=50, blank=True, null=True)  # State/Province
-    map_images = models.ImageField(upload_to='images/', blank=True, null=True)  # Map image field
 
     def __str__(self):
         return self.destination_name

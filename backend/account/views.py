@@ -6,7 +6,7 @@ from account import signals
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import status
-from .models import UserProfile
+#from .models import UserProfile
 from .serializers import UserProfileSerializer
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -55,39 +55,17 @@ def custom_login(request):
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        # Retrieve the profile of the logged-in user
-        try:
-            profile = UserProfile.objects.get(user=request.user)
-        except UserProfile.DoesNotExist:
-            return Response({'error': 'Profile not found'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = UserProfileSerializer(profile)
+    def get(self, request):
+        user = request.user
+        serializer = UserProfileSerializer(user)
         return Response(serializer.data)
 
-    def post(self, request, *args, **kwargs):
-        # Ensure user doesn't have an existing profile
-        if UserProfile.objects.filter(user=request.user).exists():
-            return Response({'error': 'Profile already exists for this user.'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Create a new profile for the logged-in user
-        data = request.data
-        data['user'] = request.user.id  # Associate the profile with the logged-in user
-        
-        serializer = UserProfileSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def put(self, request, *args, **kwargs):
-        try:
-            profile = UserProfile.objects.get(user=request.user)
-        except UserProfile.DoesNotExist:
-            return Response({'error': 'Profile not found'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+    def post(self, request):
+        user = request.user
+        serializer = UserProfileSerializer(user, data=request.data, partial=True)  # Use partial=True for partial update
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

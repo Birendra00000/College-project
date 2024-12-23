@@ -39,7 +39,7 @@ class PackagesViewSet(viewsets.ModelViewSet):
 class DestinationsViewSet(viewsets.ModelViewSet):
     queryset = Destinations.objects.all()
     serializer_class = DestinationsListSerializer
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     def get_serializer_class(self):
         if self.action == 'retrieve':  # Detail view
             return DestinationsDetailSerializer
