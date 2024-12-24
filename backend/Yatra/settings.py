@@ -42,12 +42,15 @@ INSTALLED_APPS = [
     "corsheaders",
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'packages',
     'account',
-    'django_filters',
+    'django_extensions',
+    
 ]
 
 
+APPEND_SLASH = False
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
