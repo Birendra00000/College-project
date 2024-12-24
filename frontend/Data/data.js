@@ -44,3 +44,68 @@ export const accordionData = [
       "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
   },
 ];
+
+export const SearchPlaces = [
+  {
+    id: 1,
+    image: "/assests/mustang.png",
+    location: "MUSTANG,NEPAL",
+  },
+  {
+    id: 2,
+
+    image: "/assests/illam.png",
+    location: "Illam,NEPAL",
+  },
+  {
+    id: 3,
+
+    image: "/assests/tilicho.png",
+    location: "Manang,NEPAL",
+  },
+  {
+    id: 4,
+    image: "/assests/mustang.png",
+    location: "MUSTANG,NEPAL",
+  },
+  {
+    id: 5,
+    image: "/assests/illam.png",
+    location: "Illam,NEPAL",
+  },
+  {
+    id: 6,
+    image: "/assests/tilicho.png",
+    location: "Manang,NEPAL",
+  },
+  {
+    id: 7,
+    image: "/assests/mustang.png",
+    location: "MUSTANG,NEPAL",
+  },
+  { id: 8, image: "/assests/illam.png", location: "Illam,NEPAL" },
+];
+
+export const ProductList = [
+  {
+    id: 1,
+    destination: "Pokhara, Nepal",
+    price: "$299",
+    description: "Explore the serene beauty of Pokhara...",
+    image: "/assets/illam.png",
+  },
+  {
+    id: 2,
+    destination: "Kathmandu, Nepal",
+    price: "$199",
+    description: "Discover the rich cultural heritage of Kathmandu...",
+    image: "https://example.com/kathmandu.jpg",
+  },
+  {
+    id: 3,
+    destination: "Chitwan National Park, Nepal",
+    price: "$249",
+    description: "Experience the wilderness of Nepal's most famous...",
+    image: "https://example.com/chitwan.jpg",
+  },
+];
