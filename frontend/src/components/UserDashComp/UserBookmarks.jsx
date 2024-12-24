@@ -4,7 +4,6 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import "@mantine/carousel/styles.css";
 import { Button } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import UserDashBoard from "../../pages/UserDashBoard/UserDashBoard";
 import UserSideBar from "./UserSideBar";
 
 const UserBookmarks = () => {
