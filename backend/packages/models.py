@@ -30,7 +30,8 @@ class Destinations(models.Model):
     images = models.ImageField(upload_to='images/', blank=True, null=True)
     images_1 = models.ImageField(upload_to='images/', blank=True, null=True)
     images_2 = models.ImageField(upload_to='images/', blank=True, null=True)
-    description = models.CharField(max_length=2000)
+    description = models.CharField(max_length=2000)    
+
     itinerary = models.IntegerField(choices=ITINERARY_CHOICES, blank=True, null=True)
     activities = models.ManyToManyField('Activities', related_name="destinations")
     rating = models.IntegerField(choices=RATING_CHOICES, blank=True, null=True)

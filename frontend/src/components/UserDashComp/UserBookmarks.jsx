@@ -1,40 +1,85 @@
-import React from "react";
+import { useEffect } from "react";
+import { useBookmark } from "../../AuthContext/BookmarkContext";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import "@mantine/carousel/styles.css";
+import { Button } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
+import UserDashBoard from "../../pages/UserDashBoard/UserDashBoard";
+import UserSideBar from "./UserSideBar";
 
-const UserBookmarks = ({ bookmarks, packages }) => {
-  if (!packages || packages.length === 0) {
-    return <div>No bookmarks found.</div>;
-  }
+const UserBookmarks = () => {
+  const navigate = useNavigate();
 
-  const bookmarkedPackages = packages.filter((pkg) =>
-    bookmarks.includes(pkg.id)
-  );
+  const handleView = (id) => {
+    navigate(`/packages/${id}`);
+  };
+  const { bookmarkAllProduct } = useBookmark();
+  console.log("bookmarkAllProduct", bookmarkAllProduct);
+
+  useEffect(() => {
+    console.log("Updated bookmarkAllProduct:", bookmarkAllProduct);
+  }, [bookmarkAllProduct]);
 
   return (
-    <div className="max-w-7xl mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-6">Your Bookmarked Packages</h1>
-      {bookmarkedPackages.length === 0 ? (
-        <p className="text-gray-600">
-          You haven't bookmarked any packages yet.
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {bookmarkedPackages.map((pkg) => (
-            <div
-              key={pkg.id}
-              className="bg-white shadow-md p-4 rounded-lg flex flex-col items-center"
-            >
-              <img
-                src={pkg.image}
-                alt={pkg.destination}
-                className="h-48 w-full object-cover mb-4"
-              />
-              <h2 className="text-xl font-bold">{pkg.destination}</h2>
-              <p className="text-teal-600 text-lg font-semibold">{pkg.price}</p>
+    <>
+      {" "}
+      <div className="flex w-full h-[100vh]">
+        <div className="flex w-full">
+          {" "}
+          <UserSideBar />
+          {bookmarkAllProduct && bookmarkAllProduct.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8  p-20">
+              {bookmarkAllProduct.map((item) => (
+                <div
+                  key={item.destination_name}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 h-[355px]"
+                >
+                  <img
+                    src={item?.images}
+                    alt="destination"
+                    className="w-full h-40 object-cover"
+                  />
+                  <div className="px-3 py-2">
+                    <p className="text-gray-500 text-sm">{item.location}</p>
+                    <div className="flex items-center justify-between mt-2">
+                      <p className="text-lg font-bold text-gray-800">
+                        {item.destination_name}
+                      </p>
+                      <p className="text-gray-700">
+                        ${item.price} <sup>pp</sup>
+                      </p>
+                    </div>
+                    <p className="text-gray-600 text-sm mt-2">
+                      {item.desciption}
+                    </p>
+                    <div className="flex items-center gap-2 mt-3 text-yellow-500">
+                      <span className="flex items-center gap-1">
+                        <FaStar /> <FaStar /> <FaStarHalfAlt />
+                      </span>
+                    </div>
+                    <div className="flex justify-between mt-2">
+                      <Button
+                        variant="filled"
+                        onClick={() => handleView(item.id)}
+                      >
+                        View
+                      </Button>
+                      <Button variant="filled" color="red">
+                        Book Now{" "}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+          ) : (
+            <p className="text-center text-gray-500 text-lg mt-10">
+              No bookmarked packages yet.
+            </p>
+          )}
+        </div>{" "}
+      </div>
+    </>
   );
 };
 

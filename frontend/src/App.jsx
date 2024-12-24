@@ -14,6 +14,7 @@ import AdminDestination from "./pages/AdminDashBoard/AdminDestination";
 import UserRedirectPage from "./AuthContext/UserRedirectPage";
 import UserDashBoard from "./pages/UserDashBoard/UserDashBoard";
 import UserBookmarks from "./components/UserDashComp/UserBookmarks";
+import PackageDetail from "./pages/PackageDetail/PackageDetail";
 
 function App() {
   const LayOut = () => {
@@ -42,6 +43,10 @@ function App() {
         {
           path: "/packages",
           element: <Packages />,
+        },
+        {
+          path: "/packages/:id",
+          element: <PackageDetail />,
         },
         {
           path: "/aboutUs",

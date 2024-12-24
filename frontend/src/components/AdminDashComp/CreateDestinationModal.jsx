@@ -15,7 +15,7 @@ import BaseUrl from "../../AxiosInstance/BaseUrl";
 
 const CreateDestinationModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const isMobile = useMediaQuery("(max-width: 50em)"); // For mobile screen detection
+  const isMobile = useMediaQuery("(max-width: 50em)");
   const [loading, setLoading] = useState(false);
 
   // Form state
@@ -28,12 +28,17 @@ const CreateDestinationModal = () => {
     price: "",
     itinerary: "",
     review: "",
+    location: "",
+    best_season: "",
+    pradesh: "",
+    map_image: "",
   });
 
   const fileInputRefs = {
     images: useRef(),
     images_1: useRef(),
     images_2: useRef(),
+    map_image: useRef(),
   };
 
   // Handle file input
@@ -60,24 +65,15 @@ const CreateDestinationModal = () => {
     setLoading(true);
 
     try {
-      // Create a FormData object
       const submissionData = new FormData();
-      submissionData.append("destination_name", formData.destination_name);
-      submissionData.append("images", fileInputRefs.images.current.files[0]);
-      submissionData.append(
-        "images_1",
-        fileInputRefs.images_1.current.files[0]
-      );
-      submissionData.append(
-        "images_2",
-        fileInputRefs.images_2.current.files[0]
-      );
-      submissionData.append("description", formData.description);
-      submissionData.append("price", formData.price);
-      submissionData.append("itinerary", formData.itinerary);
-      submissionData.append("review", formData.review);
+      Object.entries(formData).forEach(([key, value]) => {
+        if (fileInputRefs[key]?.current?.files[0]) {
+          submissionData.append(key, fileInputRefs[key].current.files[0]);
+        } else {
+          submissionData.append(key, value);
+        }
+      });
 
-      // Post data with Axios
       const response = await BaseUrl.post(
         "http://127.0.0.1:8000/api/destinations/",
         submissionData,
@@ -100,6 +96,10 @@ const CreateDestinationModal = () => {
           price: "",
           itinerary: "",
           review: "",
+          location: "",
+          best_season: "",
+          pradesh: "",
+          map_image: "",
         });
       }
     } catch (error) {
@@ -112,7 +112,6 @@ const CreateDestinationModal = () => {
 
   return (
     <>
-      {/* Modal Trigger */}
       <Group position="center" mt="xl">
         <Button
           variant="gradient"
@@ -123,12 +122,11 @@ const CreateDestinationModal = () => {
         </Button>
       </Group>
 
-      {/* Modal */}
       <Modal
         opened={opened}
         onClose={close}
         title="Add New Destination"
-        fullScreen={isMobile} // Full-screen on mobile
+        fullScreen={isMobile}
         overlayProps={{ opacity: 0.4, blur: 3 }}
         size="lg"
         transitionProps={{ transition: "fade", duration: 200 }}
@@ -147,33 +145,35 @@ const CreateDestinationModal = () => {
               />
             </Grid.Col>
 
-            {["images", "images_1", "images_2"].map((inputName, index) => (
-              <Grid.Col span={12} md={6} key={index}>
-                {" "}
-                {/* 12 columns on small screen, 6 on medium+ */}
-                <TextInput
-                  label={`Image ${index + 1}`}
-                  value={formData[inputName] || "No file selected"}
-                  readOnly
-                  required
-                />
-                <Group mt="xs">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleFileClick(inputName)}
-                  >
-                    Choose File
-                  </Button>
-                  <input
-                    ref={fileInputRefs[inputName]}
-                    type="file"
-                    name={inputName}
-                    onChange={(e) => handleFileChange(e, inputName)}
-                    style={{ display: "none" }}
+            {["images", "images_1", "images_2", "map_image"].map(
+              (inputName, index) => (
+                <Grid.Col span={12} md={6} key={index}>
+                  <TextInput
+                    label={`Image ${
+                      inputName === "map_image" ? "Map" : index + 1
+                    }`}
+                    value={formData[inputName] || "No file selected"}
+                    readOnly
+                    required={inputName !== "images_1"}
                   />
-                </Group>
-              </Grid.Col>
-            ))}
+                  <Group mt="xs">
+                    <Button
+                      variant="outline"
+                      onClick={() => handleFileClick(inputName)}
+                    >
+                      Choose File
+                    </Button>
+                    <input
+                      ref={fileInputRefs[inputName]}
+                      type="file"
+                      name={inputName}
+                      onChange={(e) => handleFileChange(e, inputName)}
+                      style={{ display: "none" }}
+                    />
+                  </Group>
+                </Grid.Col>
+              )
+            )}
 
             <Grid.Col span={12}>
               <Textarea
@@ -214,6 +214,36 @@ const CreateDestinationModal = () => {
             </Grid.Col>
 
             <Grid.Col span={12}>
+              <TextInput
+                label="Location"
+                placeholder="Enter location"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+              />
+            </Grid.Col>
+
+            <Grid.Col span={12}>
+              <TextInput
+                label="Best Season"
+                placeholder="Enter best season"
+                name="best_season"
+                value={formData.best_season}
+                onChange={handleChange}
+              />
+            </Grid.Col>
+
+            <Grid.Col span={12}>
+              <TextInput
+                label="Pradesh"
+                placeholder="Enter pradesh"
+                name="pradesh"
+                value={formData.pradesh}
+                onChange={handleChange}
+              />
+            </Grid.Col>
+
+            <Grid.Col span={12}>
               <Textarea
                 label="Review"
                 placeholder="Enter review"
@@ -225,7 +255,6 @@ const CreateDestinationModal = () => {
             </Grid.Col>
           </Grid>
 
-          {/* Submit Button */}
           <Group position="center" mt="lg">
             <Button
               type="submit"

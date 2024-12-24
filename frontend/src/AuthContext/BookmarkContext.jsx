@@ -3,21 +3,17 @@ import { createContext, useContext, useState } from "react";
 const BookmarkContext = createContext();
 
 export const BookmarkProvider = ({ children }) => {
-  const [userBookmarks, setUserBookmarks] = useState([]);
-
-  const toggleBookmark = (id) => {
-    setUserBookmarks((prev) =>
-      prev.includes(id)
-        ? prev.filter((bookmark) => bookmark !== id)
-        : [...prev, id]
-    );
-  };
-
+  const [bookmarkAllProduct, setBookmarkAllProduct] = useState([]);
+  console.log("bookmarkAllProduct,bookmarkAllProduct", bookmarkAllProduct);
   return (
-    <BookmarkContext.Provider value={{ userBookmarks, toggleBookmark }}>
+    <BookmarkContext.Provider
+      value={{ bookmarkAllProduct, setBookmarkAllProduct }}
+    >
       {children}
     </BookmarkContext.Provider>
   );
 };
 
-export const useBookmarks = () => useContext(BookmarkContext);
+export const useBookmark = () => {
+  return useContext(BookmarkContext);
+};

@@ -22,7 +22,7 @@ const FAQ = () => {
             <div key={index} className="border border-gray-300 rounded-md my-2">
               <button
                 onClick={() => toggleAccordion(index)}
-                className="w-full text-left px-4 py-2 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 flex justify-between items-center rounded-md"
+                className="w-full text-left px-4 py-2 bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 flex justify-between items-center rounded-md"
               >
                 <span className="text-white text-sm md:text-base p-2">
                   {item.title}
