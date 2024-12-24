@@ -1,10 +1,10 @@
 from rest_framework import viewsets
-from .models import Activities,Packages,Booked,BookingItem,Destinations,Bookmark
+from .models import Activities,BookingItem,Destinations,Bookmark,Packages
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework import generics, permissions
-from .serializers import ActivitiesSerializer,PackagesSerializer,BookingItemSerializer,DestinationsListSerializer,BookmarkSerializer,DestinationsDetailSerializer,BookedSerializer
+from .serializers import ActivitiesSerializer,PackagesSerializer,BookingItemSerializer,DestinationsListSerializer,BookmarkSerializer,DestinationsDetailSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from .models import Payment
@@ -104,20 +104,25 @@ class BookingItemViewSet(viewsets.ModelViewSet):
         # Proceed to create the booking item
         return super().create(request, *args, **kwargs)
 
-#to see booked items
-class BookingViewSet(viewsets.ModelViewSet):
-    queryset = Booked.objects.all()
-    serializer_class = BookedSerializer
-    permission_classes = [IsAuthenticated]
-    def perform_create(self,serializer):
-        serializer.save(user=self.request.user)
+# #to see booked items
+# class BookingViewSet(viewsets.ModelViewSet):
+#     queryset = Booked.objects.all()
+#     serializer_class = BookedSerializer
+#     permission_classes = [IsAuthenticated]
 
-#to see booked item list
-class BookingListViewset(viewsets.ModelViewSet):
-    serializer_class = BookedSerializer
-    permission_classes = [IsAuthenticated]
-    def get_queryset(self):
-        return Booked.objects.filter(user=self.request.user)
+#     def perform_create(self, serializer):
+#         # Automatically assign the logged-in user
+#         serializer.save(user=self.request.user)
+
+
+# #to see booked item list
+# class BookingListViewSet(viewsets.ModelViewSet):
+#     serializer_class = BookedSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def get_queryset(self):
+#         # Only show bookings for the logged-in user
+#         return Booked.objects.filter(user=self.request.user)
 
     
 class BookmarkViewSet(viewsets.ModelViewSet):

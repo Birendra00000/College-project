@@ -67,21 +67,21 @@ class BookingItem(models.Model):
 
 
 
-class Booked(models.Model):
-    class Status(models.TextChoices):
-        PENDING = 'pending', 'Pending'
-        ACCEPTED = 'accepted', 'Accepted'
-        NOTACCEPTED = 'notAccepted', 'Not Accepted'
+# class Booked(models.Model):
+#     class Status(models.TextChoices):
+#         PENDING = 'pending', 'Pending'
+#         ACCEPTED = 'accepted', 'Accepted'
+#         NOTACCEPTED = 'notAccepted', 'Not Accepted'
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # User who booked
-    booked = models.ForeignKey(BookingItem, on_delete=models.CASCADE, related_name='booked_items')  # Booking item
-    start_date = models.DateField()  # Start date of the booking
-    end_date = models.DateField()  # End date of the booking
-    status = models.CharField(max_length=200, choices=Status.choices, default=Status.PENDING)  # Booking status
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Total price (calculated dynamically)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)  # User who booked
+#     booked = models.ForeignKey(BookingItem, on_delete=models.CASCADE, related_name='booked_items')  # Booking item
+#     start_date = models.DateField()  # Start date of the booking
+#     end_date = models.DateField()  # End date of the booking
+#     status = models.CharField(max_length=200, choices=Status.choices, default=Status.PENDING)  # Booking status
+#     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Total price (calculated dynamically)
 
-    def __str__(self):
-        return f"{self.user.username} => {self.booked.destination_name} ({self.status})"
+#     def __str__(self):
+#         return f"{self.user.username} => {self.booked.destination_name} ({self.status})"
 
 class Bookmark(models.Model):
     user = models.ForeignKey(User,on_delete =models.CASCADE, related_name='bookmarks')

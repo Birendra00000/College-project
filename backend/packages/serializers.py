@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Activities, Packages, Destinations, BookingItem, Booked, Bookmark, Payment
+from .models import Activities, Packages, Destinations, BookingItem, Bookmark, Payment
 from django.contrib.auth.models import User
 from decimal import Decimal
 
@@ -62,18 +62,30 @@ class BookingItemSerializer(serializers.ModelSerializer):
 
         return data
 
-class BookedSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username')  # User's username
-    booked = BookingItemSerializer()  # Nested BookingItem serializer
-    total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)  # Total price (read-only)
 
-    start_date = serializers.DateField()
-    end_date = serializers.DateField()
-    status = serializers.CharField(source='get_status_display')  # Show human-readable status
+# class BookedSerializer(serializers.ModelSerializer):
+#     user = serializers.CharField(source='user.username', read_only=True)  # User's username, read-only
+#     booked = BookingItemSerializer()  # Nested BookingItem serializer
+#     total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)  # Read-only total price
+#     status = serializers.CharField(source='get_status_display', read_only=True)  # Read-only status
 
-    class Meta:
-        model = Booked
-        fields = ['id', 'user', 'booked', 'start_date', 'end_date', 'status', 'total_price']
+#     class Meta:
+#         model = Booked
+#         fields = ['id', 'user', 'booked', 'start_date', 'end_date', 'status', 'total_price']
+
+#     def create(self, validated_data):
+#         # Extract the 'booked' nested data (this should be a dictionary, not just an ID)
+#         booked_data = validated_data.pop('booked')  # Extract 'booked' data from validated data
+        
+#         # Create the associated BookingItem instance
+#         booked_instance = BookingItem.objects.create(**booked_data)  # Create the BookingItem
+        
+#         # Now create the Booked instance, associating the newly created BookingItem
+#         booked_instance = Booked.objects.create(
+#             booked=booked_instance,  # Assign the created BookingItem
+#             **validated_data  # Pass the rest of the validated data
+#         )
+#         return booked_instance
 
 class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:
