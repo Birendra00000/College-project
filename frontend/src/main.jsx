@@ -7,20 +7,21 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MantineProvider } from "@mantine/core";
 import AuthProvider from "./AuthContext/AuthUser.jsx";
 import { BookmarkProvider } from "./AuthContext/BookmarkContext.jsx";
+
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        {" "}
-        <BookmarkProvider>
+      <BookmarkProvider>
+        <AuthProvider>
+          {" "}
           <MantineProvider>
             {" "}
             <App />
           </MantineProvider>{" "}
-        </BookmarkProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </BookmarkProvider>
     </QueryClientProvider>
   </StrictMode>
 );

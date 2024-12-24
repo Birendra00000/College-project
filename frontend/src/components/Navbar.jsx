@@ -3,14 +3,25 @@ import { CiSearch } from "react-icons/ci";
 import { FaCircleUser } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link } from "react-router-dom";
-import { SearchPlaces } from "../../Data/data";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import { Link, useNavigate } from "react-router-dom";
+// import { SearchPlaces } from "../../Data/data";
+// import Button from "react-bootstrap/Button";
+// import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleView = (id) => {
+    navigate(`/packages/${id}`);
+    setSearchTerm("");
+  };
+
   const [hoverSearch, setHoverSearch] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  console.log("searchTerm", setSearchResults);
   const refCurrent = useRef(null);
   // console.log(refCurrent.current);
 
@@ -39,17 +50,48 @@ const Navbar = () => {
   // const [checkInDate, setCheckInDate] = useState(null);
   // const [checkOutDate, setCheckOutDate] = useState(null);
   const [modalShow, setModalShow] = React.useState(false);
-  const [searchPlaces, setSearchPlaces] = useState([
-    "Illam",
-    "Pokhara",
-    "Mustang",
-    "Everest Base Camp",
-  ]);
+
+  // Fetch destinations based on search term
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      if (searchTerm.length > 2) {
+        // Only search if input length is greater than 2
+        try {
+          const response = await axios.get(
+            "http://127.0.0.1:8000/api/destinations/",
+            {
+              params: { destination_name: searchTerm },
+            }
+          );
+
+          const filteredResults = response.data.filter((destination) => {
+            // Split the destination name and search term into words
+            const destinationWords = destination.destination_name
+              .toLowerCase()
+              .split(" ")
+              .slice(0, 3); // First 3 words of the destination
+            const searchWords = searchTerm.toLowerCase().split(" ").slice(0, 3); // First 3 words of the search term
+
+            // Check if the first 3 words of both match
+            return destinationWords.join(" ").startsWith(searchWords.join(" "));
+          });
+
+          setSearchResults(filteredResults); // Set filtered results
+        } catch (error) {
+          console.error("Error fetching destinations:", error);
+        }
+      } else {
+        setSearchResults([]); // Clear results if search term is too short
+      }
+    };
+
+    fetchDestinations();
+  }, [searchTerm]);
 
   return (
     <>
       {" "}
-      <div className="flex justify-center w-full shadow-lg">
+      <div className="flex justify-center w-full shadow-lg relative">
         <div
           className="flex w-full md:w-[80%] lg:w-[80%] items-center justify-between p-4"
           onMouseLeave={() => setHoverSearch(false)}
@@ -78,7 +120,8 @@ const Navbar = () => {
                   type="text"
                   className="absolute border right-[90px] p-[6px] w-[390px] rounded-md outline-none"
                   placeholder="Search"
-                  onClick={() => setModalShow(true)}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               )}
               <Link to="/login">
@@ -116,50 +159,66 @@ const Navbar = () => {
           </div>
         )}
       </div>{" "}
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
+      {searchTerm && (
+        <div className="absolute top-[15%] right-[20%] w-[60%] bg-red-500 border rounded-md mt-2 text-white z-1 h-fit">
+          {searchResults.length > 0 ? (
+            <ul>
+              {searchResults.map((item, index) => (
+                <li
+                  key={index}
+                  className="p-2 cursor-pointer hover:bg-red-400 "
+                  onClick={() => handleView(item.id)}
+                >
+                  {item.destination_name}{" "}
+                  {/* Assuming the API returns an object with a 'name' property */}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="p-2 bg-red-500 text-xl">No destinations found</p>
+          )}
+        </div>
+      )}
     </>
   );
 };
 
 export default Navbar;
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      {" "}
-      <div className="flex p-4 w-full text-lg bottom-b border-slate-400">
-        <h5>Visit New Places</h5>{" "}
-      </div>{" "}
-      <div className="grid grid-cols-4 justify-between p-4 w-full text-sm flex-nowrap">
-        {SearchPlaces?.map((item, index) => {
-          return (
-            <>
-              {" "}
-              <span className="col-span-1" key={item.id}>
-                <img
-                  src={item.image}
-                  alt=""
-                  className="w-[150px] h-[150px] rounded-md"
-                />
-                <h5 className="text-base flex justify-center">
-                  {item.location}
-                </h5>{" "}
-              </span>
-            </>
-          );
-        })}
-      </div>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
+// function MyVerticallyCenteredModal(props) {
+//   return (
+//     <Modal
+//       {...props}
+//       size="lg"
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       {" "}
+//       <div className="flex p-4 w-full text-lg bottom-b border-slate-400">
+//         <h5>Visit New Places</h5>{" "}
+//       </div>{" "}
+//       <div className="grid grid-cols-4 justify-between p-4 w-full text-sm flex-nowrap">
+//         {SearchPlaces?.map((item, index) => {
+//           return (
+//             <>
+//               {" "}
+//               <span className="col-span-1" key={item.id}>
+//                 <img
+//                   src={item.image}
+//                   alt=""
+//                   className="w-[150px] h-[150px] rounded-md"
+//                 />
+//                 <h5 className="text-base flex justify-center">
+//                   {item.location}
+//                 </h5>{" "}
+//               </span>
+//             </>
+//           );
+//         })}
+//       </div>
+//       <Modal.Footer>
+//         <Button onClick={props.onHide}>Close</Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }

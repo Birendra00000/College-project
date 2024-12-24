@@ -2,6 +2,7 @@ import React from "react";
 import UserSideBar from "../../components/UserDashComp/UserSideBar";
 
 import UserProfile from "../../components/UserDashComp/UserAnalysisChart";
+import UserBookmarks from "../../components/UserDashComp/UserBookmarks";
 
 const UserDashBoard = () => {
   return (

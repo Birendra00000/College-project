@@ -6,7 +6,14 @@ import { Carousel } from "@mantine/carousel";
 import { Box, Image, Text, Badge } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { Button } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 const CarouselDestination = () => {
+  const navigate = useNavigate();
+
+  const handleView = (id) => {
+    navigate(`/packages/${id}`);
+  };
+
   const fetchDestinations = async () => {
     const { data } = await BaseUrl.get("api/destinations");
     return data;
@@ -122,7 +129,12 @@ const CarouselDestination = () => {
                         </span>
                       </div>
                       <div className="flex justify-between mt-2">
-                        <Button variant="filled">View</Button>
+                        <Button
+                          variant="filled"
+                          onClick={() => handleView(item.id)}
+                        >
+                          View
+                        </Button>
                         <Button variant="filled" color="red">
                           Book Now{" "}
                         </Button>
