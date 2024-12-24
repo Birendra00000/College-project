@@ -1,10 +1,10 @@
 from rest_framework import viewsets
-from .models import Activities,Packages,BookingItem,Destinations,Bookmark
+from .models import Activities,Packages,Booked,BookingItem,Destinations,Bookmark
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework import generics, permissions
-from .serializers import ActivitiesSerializer,PackagesSerializer,BookingItemSerializer,DestinationsListSerializer,BookmarkSerializer,DestinationsDetailSerializer
+from .serializers import ActivitiesSerializer,PackagesSerializer,BookingItemSerializer,DestinationsListSerializer,BookmarkSerializer,DestinationsDetailSerializer,BookedSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from .models import Payment
@@ -12,7 +12,9 @@ from django.conf import settings
 from .serializers import PaymentSerializer
 from .utils import initiate_payment
 from rest_framework.response import Response
+from rest_framework import filters
 from rest_framework import status
+from rest_framework.decorators import action
 
 
 class ActivitiesViewSet(viewsets.ModelViewSet):
@@ -38,26 +40,19 @@ class PackagesViewSet(viewsets.ModelViewSet):
 class DestinationsViewSet(viewsets.ModelViewSet):
     queryset = Destinations.objects.all()
     serializer_class = DestinationsListSerializer
-    #permission_classes = [IsAuthenticated]
+    filter_backends = (filters.SearchFilter,)  # Enable search filter
+    search_fields = ['destination_name']  # Specify the field to search on
+
     def get_serializer_class(self):
-        if self.action == 'retrieve':  # Detail view
-            return DestinationsDetailSerializer
-        return DestinationsListSerializer  # List view
-
-    search_fields = ['destination_name']
-
-class SearchDestinationsViewSet(viewsets.ModelViewSet):
-    #permission_classes = [IsAuthenticated]
-    queryset = Destinations.objects.all()
-    serializer_class = DestinationsDetailSerializer
-    def get(self, request,*args,**kwargs):
-        query = request.query_params.get('name', '')
-        if not query:
-            return Response({"error": "No such destination"},status=status.HTTP_400_BAD_REQUEST)
-        destinations = Destinations.objects.filter(destination_name__icontains=query)
-        serializer = DestinationsListSerializer(destinations, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
+        return DestinationsDetailSerializer if self.action == 'retrieve' else DestinationsListSerializer
+        
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        destination_name = self.request.query_params.get('destination_name', None)
+        if destination_name:
+            queryset = queryset.filter(destination_name__icontains=destination_name)  # Apply custom filter
+        return queryset# List view
+    
 class UpdateDestinationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Destinations.objects.all()
@@ -86,10 +81,44 @@ class DeleteDestinationViewSet(viewsets.ModelViewSet):
         except Destinations.DoesNotExist:
             return Response({"error": "Destination not found"}, status=status.HTTP_404_NOT_FOUND)
 
+#for booking
 class BookingItemViewSet(viewsets.ModelViewSet):
     queryset = BookingItem.objects.all()
     serializer_class = BookingItemSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        destination_id = request.data.get('destination_name')  # Get destination ID
+        if not destination_id:
+            return Response({"error": "Destination ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            destination = Destinations.objects.get(id=destination_id)  # Ensure destination exists
+        except Destinations.DoesNotExist:
+            return Response({"error": "Destination not found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Proceed to create the booking item
+        return super().create(request, *args, **kwargs)
+
+#to see booked items
+class BookingViewSet(viewsets.ModelViewSet):
+    queryset = Booked.objects.all()
+    serializer_class = BookedSerializer
+    permission_classes = [IsAuthenticated]
+    def perform_create(self,serializer):
+        serializer.save(user=self.request.user)
+
+#to see booked item list
+class BookingListViewset(viewsets.ModelViewSet):
+    serializer_class = BookedSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return Booked.objects.filter(user=self.request.user)
+
     
 class BookmarkViewSet(viewsets.ModelViewSet):
     
