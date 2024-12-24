@@ -15,6 +15,7 @@ import UserRedirectPage from "./AuthContext/UserRedirectPage";
 import UserDashBoard from "./pages/UserDashBoard/UserDashBoard";
 import UserBookmarks from "./components/UserDashComp/UserBookmarks";
 import PackageDetail from "./pages/PackageDetail/PackageDetail";
+import UserBookDest from "./pages/UserDashBoard/UserBookDest";
 
 function App() {
   const LayOut = () => {
@@ -55,6 +56,10 @@ function App() {
         {
           path: "/userRedirectPage",
           element: <UserRedirectPage />,
+        },
+        {
+          path: "/user/book",
+          element: <UserBookDest />,
         },
 
         {

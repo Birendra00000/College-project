@@ -42,7 +42,7 @@ const AdminDestination = () => {
         <AdminSideBar />
         <div className="w-full flex flex-col">
           <AdminNavbar />
-          <div className="w-full flex flex-col items-center mt-12 px-4 sm:px-6 lg:px-8 ">
+          <div className="w-full flex flex-col items-center mt-12 px-4 sm:px-6 lg:px-8 absolute top-[60px] left-0 md:static">
             <div className="flex flex-col w-full lg:w-[90%] h-[400px] overflow-auto shadow-md">
               <div className="flex w-full mb-4">
                 <span className="w-1/2 text-sm md:text-lg text-center">
