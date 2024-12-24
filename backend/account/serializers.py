@@ -65,6 +65,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
     email = serializers.EmailField(source='user.email', read_only=True)
     profile_photo = serializers.ImageField(required=False)
+    gender = serializers.ChoiceField(choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], required=False)
 
     class Meta:
         model = UserProfile
@@ -79,6 +80,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         # Now update other profile fields
         instance.profile_photo = validated_data.get('profile_photo', instance.profile_photo)
+        instance.address = validated_data.get('address', instance.address)
+        instance.phone = validated_data.get('phone', instance.phone)
+        instance.about_you = validated_data.get('about_you', instance.about_you)
+        instance.date_of_birth = validated_data.get('date_of_birth', instance.date_of_birth)
+        instance.gender = validated_data.get('gender', instance.gender)
         instance.save()
 
         return instance

@@ -10,10 +10,12 @@ from .viewsets import (
     BookmarkViewSet,
     ViewBookmarkViewSet,
     DestinationDetailViewSet,
-    SearchDestinationsViewSet,
+    #SearchDestinationsViewSet,
     UpdateDestinationViewSet,
     DeleteDestinationViewSet,
-    PaymentViewSet,  # New viewset for payment
+    PaymentViewSet,
+    #BookingViewSet,
+    #BookingListViewSet # New viewset for payment
 )
 
 # Define the router and register standard viewsets
@@ -24,14 +26,12 @@ router.register(r'destinations', DestinationsViewSet)
 router.register(r'bookingitem', BookingItemViewSet)
 router.register(r'bookmark', BookmarkViewSet)
 router.register(r'payment', PaymentViewSet)
-
-# Additional router for payment-related routes
-# payment_router = DefaultRouter()
-# payment_router.register(r'payment', PaymentViewSet)
+# router.register(r'booked', BookingViewSet,basename='booked')  
+# router.register(r'booked_list', BookingListViewSet,basename='booked_list')
 
 urlpatterns = [
     path('', include(router.urls)),  # Include standard router URLs
-    path('destinations/search/', SearchDestinationsViewSet.as_view({'get': 'list'}), name='search_destinations'),
+    #path('destinations/search/', SearchDestinationsViewSet.as_view({'get': 'list'}), name='search_destinations'),
     path('destinations/<int:pk>/update/', UpdateDestinationViewSet.as_view({'put': 'update'}), name='update_destination'),
     path('destinations/<int:pk>/delete/', DeleteDestinationViewSet.as_view({'delete': 'destroy'}), name='delete_destination'),
     path('bookmarks/view/', ViewBookmarkViewSet.as_view({'get': 'list'}), name='view_bookmarks'),
