@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import BaseUrl from "../../AxiosInstance/BaseUrl";
 
 const PackageDetail = () => {
@@ -70,10 +70,11 @@ const PackageDetail = () => {
               Province: {destination.pradesh}
             </p>
             <p className="text-gray-600 mb-2">Review: {destination.review}</p>
-            <div className="mt-6">
+            <div className="mt-6">                        <Link to="/user/book">
+            
               <button className="bg-teal-500 text-white px-6 py-2 rounded-lg shadow hover:bg-teal-600 transition duration-300">
                 Book Now
-              </button>
+              </button></Link>
             </div>
           </div>
         </div>

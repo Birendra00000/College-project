@@ -4,6 +4,9 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from .models import UserProfile
+from django.contrib.auth.signals import user_logged_in
+from django.dispatch import receiver
+from django.core.mail import send_mail
 
 def updateUser(sender,instance,**kwargs):
     user = instance
@@ -25,3 +28,12 @@ def manage_user_profile(sender, instance, created, **kwargs):
     else:
         if hasattr(instance, 'userprofile'):
             instance.userprofile.save()
+
+@receiver(user_logged_in)
+def send_login_email(sender, request, user, **kwargs):
+    subject = "Welcome Back to Yatra"
+    message = f"Hi {user.username},\n\nThank you for logging in to Yatra. We are excited to have you back!"
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [user.email]
+    
+    send_mail(subject, message, from_email, recipient_list,fail_silently=False)
