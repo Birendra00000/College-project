@@ -29,19 +29,19 @@ export const cardData = [
 ];
 export const accordionData = [
   {
-    title: "About Yatra",
+    title: "What is Yatra?",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Yatra is an adventure travel planner designed to make exploring the world easier and more exciting."
   },
   {
-    title: "Accordion Item #2",
-    content:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    title: "Can I customize my travel package?"
+,
+    content:"Yes, Yatra offers customizable packages! You can contact our support team or select the Customize Package option on the booking page to tailor your itinerary based on your preferences."
   },
   {
-    title: "Accordion Item #3",
+    title: "Will this site respond to my inquiries or issues?",
     content:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Absolutely! Yatra prioritizes customer satisfaction. Our support team is available to address your inquiries or resolve any issues. You can contact us through the “Contact Us” page, and we’ll respond promptly.",
   },
 ];
 

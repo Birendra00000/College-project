@@ -6,7 +6,8 @@ import { Carousel } from "@mantine/carousel";
 import { Box, Image, Text, Badge } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { Button } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const CarouselDestination = () => {
   const navigate = useNavigate();
 
@@ -135,9 +136,10 @@ const CarouselDestination = () => {
                         >
                           View
                         </Button>
+                        <Link to="/user/book">
                         <Button variant="filled" color="red">
                           Book Now{" "}
-                        </Button>
+                        </Button></Link>
                       </div>
                     </div>
                   </div>

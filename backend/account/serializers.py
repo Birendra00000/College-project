@@ -58,8 +58,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return user
 
 
-
-
 #user profile
 class UserProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)

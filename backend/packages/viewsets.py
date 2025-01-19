@@ -35,8 +35,6 @@ class PackagesViewSet(viewsets.ModelViewSet):
     search_fields = ['packages_name']
     
 
-
-
 class DestinationsViewSet(viewsets.ModelViewSet):
     queryset = Destinations.objects.all()
     serializer_class = DestinationsListSerializer
